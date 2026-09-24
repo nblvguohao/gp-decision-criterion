@@ -23,8 +23,8 @@ figure in the manuscript from public data.
 
 | Result | Script | Output |
 |---|---|---|
-| Of 22 official metrics, 1 is admissible (Tier I), 1 is calibration-invariant only (Tier II) and 20 are neither, in every dataset | `analysis/crosscrop/code/partition.py`, `analysis/g2f_leaderboard/code/invariance.py`, `analysis/crosscrop/code/monotone_test_panels.py` | `partition_metrics.csv`, `invariance_test.csv`, `monotone_test.csv` → Fig. 1, Table 2 |
-| Switching official metric reverses 26.9 % of team pairs (team-bootstrap CI 18.0–37.1 %) | `analysis/crosscrop/code/build_summary.py` | `cross_dataset_summary.csv` → Fig. 2, Table 2 |
+| Of 22 official metrics, 1 is admissible (Tier I), 1 is calibration-invariant only (Tier II) and 20 are neither, in every dataset | `analysis/crosscrop/code/partition.py`, `analysis/g2f_leaderboard/code/invariance.py`, `analysis/crosscrop/code/monotone_test_panels.py` | `partition_metrics.csv`, `invariance_test.csv`, `monotone_test.csv` → Fig. 1, Table 1 |
+| Switching official metric reverses 26.9 % of team pairs (team-bootstrap CI 18.0–37.1 %) | `analysis/crosscrop/code/build_summary.py` | `cross_dataset_summary.csv` → Fig. 2, Table 1 |
 | 129 of the 231 metric pairs reverse more than 5 % of team pairs (BH, FDR 5 %) | `analysis/g2f_leaderboard/code/reversal_tests.py` | `reversal_tests.csv`, `reversal_by_class.csv` |
 | A published rank spans a median of 12 of 30 places across the official metrics | `analysis/crosscrop/code/rank_census.py`, `analysis/g2f_leaderboard/code/rank_intervals.py` | `rank_census.csv`, `rank_intervals.csv` → Fig. 4 |
 | The method panels include GBLUP and marker × environment GBLUP, fitted by REML on the same marker principal components as the ridge baselines | `analysis/crosscrop/code/mixed_models.py`, `panel_bean.py`, `panel_ursn.py`, `panel_nust.py`, `panel_china.py` | `*_panel_wide.csv` |
@@ -96,7 +96,7 @@ tools/                 manuscript support: reference database and number check
 
 The criterion, the resolution threshold and the outcome test are released as GPverdict, a
 Python package with a command line and an in-browser web version: source and tests at
-https://github.com/nblvguohao/gpverdict (v1.1.0), web version at
+https://github.com/nblvguohao/gpverdict (v1.1.1), web version at
 https://nblvguohao.github.io/gpverdict/. A copy of the package used for the paper is in
 `tool/`.
 

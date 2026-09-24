@@ -521,17 +521,16 @@ def build_registry():
     fin_src = f"{GAP} gap (i_inf·r) + {COP} gap_N (i_fin·r)"
 
     # ================= Abstract
-    reg("摘要", "官方指标数与各档数", r"Of the competition's (twenty-two) official metrics the criterion admits (one), the mean within-environment rank correlation; the 2024 metric is protected against calibration only, and (twenty) — including RMSE — fail",
-        lambda: [len(D.pmz), nT("I"), nT("III")], PM)
+    reg("摘要", "官方指标数与各档数", r"the criterion admits (one) of (twenty-two) official metrics, the within-environment rank correlation; Pearson correlation is protected against calibration only, and (twenty) metrics, including RMSE, fail",
+        lambda: [nT("I"), len(D.pmz), nT("III")], PM)
+    reg("摘要", "两相关指标无一稳定更优; 误差族在大豆/春小麦落后 (环境内决策)",
+        r"(neither correlation consistently selects better material), while error-magnitude rankings trail them in soybean and spring wheat",
+        lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1
+                      and all(D.paired(d, "D1", c) > 0 for d in ("soybean", "spring wheat") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse")))], RDS + "; " + DIH, kind="bool")
+    reg("摘要", "GPverdict 在 CUBIC: 并列数与方法数", r"it finds (three) of (\d+) models that the trial cannot separate",
+        lambda: [(lambda g: [len(g["tied"]), g["methods"]])(json.load(open(f"{X}/gpverdict_cubic.json")))][0], f"{X}/gpverdict_cubic.json")
     reg("摘要", "两个官方指标间反转率", r"Switching between the two official metrics reverses (\d+) % of team pairs\.",
         lambda: [100 * s_("maize", "reversal")], SUM)
-    reg("摘要", "优势族随决策而定: D1 相关族在大豆/春小麦领先 (仅大豆显著), D2 误差族在春小麦/菜豆领先",
-        r"error-magnitude rankings trail the correlations for within-environment selection in (soybean and spring wheat) \(significantly in soybean\) and lead in spring wheat and common bean when the target is absolute",
-        lambda: [all(D.paired(d, "D1", c) > 0 for d in ("soybean", "spring wheat") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
-                 and all(D.paired(d, "D2", c) < 0 for d in ("spring wheat", "common bean") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
-                 and D.paired("soybean", "D1", "paired_ci_lo") > 0 and D.paired("soybean", "D1", "paired_spearman_ci_lo") > 0
-                 and D.paired("spring wheat", "D1", "paired_ci_lo") < 0 and D.paired("spring wheat", "D1", "paired_spearman_ci_lo") < 0],
-        RDS, kind="bool")
     reg("摘要", "高斯设计网格 k/√N (f = 0.10); 竞赛设计下的高斯值; 第1–2名差距",
         r"falls as about (\d)/√N with its N genotype–environment cells; at the competition's design it is " + N + r", an order of magnitude above the " + N + r" separating the first two teams",
         lambda: [cells_law(0.10)[2], D.tmz.theory_lam05, D.gap12], f"{X}/threshold_design.csv; " + TT + "; " + S1f)
@@ -657,9 +656,6 @@ def build_registry():
         lambda: [D.mono["spearman_r"]], MON)
     reg("§3.1", "划分在五个数据集相同 (1/1/20)", r"it recurs in every dataset — (one, one and twenty) in maize, common bean, spring wheat, soybean and a fifth dataset",
         lambda: [len(D.part) == 5 and bool(((D.part.tier_I == 1) & (D.part.tier_II == 1) & (D.part.tier_III == 20)).all())], PB, kind="bool")
-    reg("§3.1", "配对排名改变概率 (失败者)", r"reorders them in (\d+)–(\d+) % of replicates",
-        lambda: [100 * D.pinv[(D.pinv.tie_convention == "tie-safe") & (D.pinv.p_ranking_changed > 0)].p_ranking_changed.min(),
-                 100 * D.pinv[(D.pinv.tie_convention == "tie-safe")].p_ranking_changed.max()], f"{G}/paired_invariance.csv tie-safe")
     reg("§3.1", "决策型指标在三数据集两检验下的最大漂移", r"are invariant under both tests in maize, common bean and soybean \(drift at most " + N + r"\)",
         lambda: [float(D.dmi[D.dmi.metric.isin(["SG", "hit", "NDCG", "kendall"])][["affine", "monotone"]].max().max())],
         f"{G}/decision_metrics_invariance.csv", kind="le")
@@ -673,10 +669,6 @@ def build_registry():
     reg("§3.2", "官方指标间反转 计数/比例/CI", r"(\d+) of (\d+) team pairs reverse order — " + N + r" %, team-bootstrap 95 % CI \[" + N + r" %, " + N + r" %\]",
         lambda: [round(s("maize", "reversal") * 435), s("maize", "methods") * (s("maize", "methods") - 1) / 2, 100 * s("maize", "reversal"),
                  100 * s("maize", "ci_lo"), 100 * s("maize", "ci_hi")], SUM + " maize")
-    reg("§3.2", "前十名反转率与CI", r"Among the top ten teams the rate is " + N + r" % \[" + N + r" %, " + N + r" %\]",
-        lambda: [100 * pd.read_csv(f"{G}/top10_reversal.csv").iloc[0][c] for c in ("rate", "ci_lo", "ci_hi")], f"{G}/top10_reversal.csv")
-    reg("§3.2", "置换零分布均值", r"against " + N + " for unrelated rankings",
-        lambda: [D.perm_null], S1f + " (reversal.py 种子 20260908, 5000 次)")
     reg("§3.2", "名次变化中位数/最大", r"Median rank change is " + N + " places, the largest (fifteen)",
         lambda: [(D.tierrank.official_2022 - D.tierrank.official_2024).abs().median(), (D.tierrank.official_2022 - D.tierrank.official_2024).abs().max()], TIER)
     reg("§3.2", "前三名集合不同", r"and the (top-three set differs) between the two metrics",
@@ -906,10 +898,6 @@ def build_registry():
         lambda: [_rk("ens_ml"), _rk("rf"), _rk("gbm"), _gv()["gap"]], GVJ)
     reg("§3.7", "CUBIC 并列集合恰为这三个方法, 且集成领先", r"(It ranks an ensemble of random forest, gradient boosting and a multilayer perceptron first)",
         lambda: [bool(_gv()["leader"] == "ens_ml" and _gv()["tied"] == ["ens_ml", "rf", "gbm"])], GVJ, kind="bool")
-    reg("摘要", "GPverdict 在 CUBIC: 方法数与并列数", r"for (\d+) models in a Chinese maize population it identifies (three) that the trial cannot separate",
-        lambda: [_gv()["methods"], len(_gv()["tied"])], GVJ)
-    reg("摘要", "结果检验分不开秩相关与 Pearson (三面板中两者回收之差符号不一)", r"(the outcome tests do not separate the rank from the Pearson correlation)",
-        lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1)], DIH, kind="bool")
     reg("§3.7", "按 Pearson 判定的并列集合与按秩相关相同", r"(places the same three methods inside that gap)",
         lambda: [bool((lambda T: set(T.index[T.pearson.max() - T.pearson <= _gv()["gap"]]) == set(_gv()["tied"]))(
             pd.read_csv(f"{X}/gpverdict_cubic_methods.csv", index_col=0)))], f"{X}/gpverdict_cubic_methods.csv", kind="bool")
