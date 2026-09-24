@@ -526,16 +526,20 @@ def build_registry():
         lambda: [D.tmz.theory_lam05, D.tmz.transfer_lo, D.tmz.transfer_hi, D.gap12,
                  100 * D.pairs_closer(D.tmz.theory_lam05)[0] / D.pairs_closer(D.tmz.theory_lam05)[1]], TT + "; " + S1f)
     reg("摘要", "官方指标数与各档数",
-        r"this criterion admits (one) of the (twenty-two) official metrics, the mean within-environment rank correlation; the within-environment Pearson correlation is unmoved by calibration only, and (twenty) — including the metric that decided the 2022 ranking — fail",
-        lambda: [nT("I"), len(D.pmz), nT("III")], PM)
+        r"of the competition's (twenty-two) official metrics it admits (one), the mean within-environment rank correlation; the within-environment Pearson correlation is unmoved by calibration only, and (twenty) — including RMSE — fail",
+        lambda: [len(D.pmz), nT("I"), nT("III")], PM)
     reg("摘要", "两个官方指标间反转率及CI；名次跨度",
         r"reverses (\d+) % of team pairs \(95 % CI (\d+)–(\d+) %\), and team rank spans a median of (\d+) of (\d+) places",
         lambda: [100 * s_("maize", "reversal"), 100 * s_("maize", "ci_lo"), 100 * s_("maize", "ci_hi"),
                  D.rc.loc["maize", "census_median_range"], D.rc.loc["maize", "methods"]], SUM + "; " + RC)
     reg("摘要", "缺口均值范围 (三个选择强度)",
-        r"verified submissions, by a mean of " + N + "–" + N + " phenotypic standard deviations",
+        r"verified submissions, by " + N + "–" + N + " phenotypic SD",
         lambda: [min(fmeans()), max(fmeans())], GAP)
-    reg("摘要", "五份已核实提交都低于 i·r", r"fell short of the projection i·r in (all five) verified submissions",
+    reg("摘要", "两个相关指标互有胜负 (三面板中 Pearson−Spearman 回收之差符号不一)", r"(neither correlation metric consistently selects better material)",
+        lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1)], DIH, kind="bool")
+    reg("摘要", "高斯设计网格: Δr* ≈ k/√N, f = 0.10 时 k ≈ 3", r"The Gaussian gap falls as about (\d)/√N",
+        lambda: [cells_law(0.10)[2]], f"{X}/threshold_design.csv")
+    reg("摘要", "五份已核实提交都低于 i·r", r"fell short of i·r in (all five) verified submissions",
         lambda: [bool((D.gap.gap < 0).all()) and D.gap.team.nunique() == 5], GAP, kind="bool")
     reg("表1注", "大豆分析所用环境数 (≥25 个基因型) 与基因型数",
         r"the soybean analyses use the (\d+) of its environments that carry at least (\d+) genotypes, with ([\d,]+) genotypes",
@@ -544,7 +548,7 @@ def build_registry():
                      D.panel("soybean")[D.panel("soybean").method == D.panel("soybean").method.iloc[0]])][0],
         PANEL_OF["soybean"][0])
     reg("摘要", "优势族随决策而定: D1 相关族在大豆/春小麦领先 (仅大豆显著), D2 误差族在春小麦/菜豆领先 (仅春小麦显著)",
-        r"correlation rankings lead for within-environment selection in (soybean and spring wheat), error-magnitude rankings for an absolute target, which reads calibration, in spring wheat and common bean, each significantly in one panel",
+        r"error-magnitude rankings trail them in (soybean and spring wheat) \(significantly in soybean\) and lead when the target is absolute, which reads calibration \(spring wheat, common bean\)",
         lambda: [all(D.paired(d, "D1", c) > 0 for d in ("soybean", "spring wheat") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
                  and all(D.paired(d, "D2", c) < 0 for d in ("spring wheat", "common bean") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
                  and D.paired("soybean", "D1", "paired_ci_lo") > 0 and D.paired("soybean", "D1", "paired_spearman_ci_lo") > 0
