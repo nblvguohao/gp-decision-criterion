@@ -1,0 +1,8 @@
+metric_set,n_metrics,median_width,pct_of_board,winner_lo,winner_hi
+all 22 official metrics,22,17.0,56.7,1,10
+"six distinct quantities, within environment",6,17.0,56.7,1,10
+"six distinct quantities, pooled",6,15.0,50.0,1,9
+"family-balanced (2 error, 2 correlation, 1 slope)",5,19.5,65.0,1,11
+error-magnitude family only,14,7.0,23.3,1,4
+correlation family only,6,15.0,50.0,1,9
+Tier I and II metrics only,2,8.0,26.7,1,4

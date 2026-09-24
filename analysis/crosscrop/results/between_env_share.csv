@@ -1,0 +1,8 @@
+dataset,scope,between_env_pct,n_env,n_obs
+maize,2022 answer key,57.969992918692164,23,10290
+common bean,environments with >= 25 genotypes,67.81792459149366,10,2932
+common bean,all environments in the panel,67.81792459149366,10,2932
+spring wheat,environments with >= 12 genotypes,50.5550112699903,109,1948
+spring wheat,all environments in the panel,50.5550112699903,109,1948
+soybean,environments with >= 25 genotypes,69.49474989558709,169,14333
+soybean,all environments in the panel,69.69885518305091,184,14661

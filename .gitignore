@@ -1,0 +1,10 @@
+# data/raw/ holds only the redistributable primary files the scripts read; they are
+# added explicitly (git add -f). CUBIC data are never added (DATA_SOURCES.md).
+data/raw/
+# The soybean panels ship gzipped; the uncompressed copies are regenerated.
+analysis/crosscrop/results/nust_panel_wide.csv
+analysis/crosscrop/results/nust_panel_predictions.csv
+
+.DS_Store
+__pycache__/
+*.pyc

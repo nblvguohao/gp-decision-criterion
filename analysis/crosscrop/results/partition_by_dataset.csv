@@ -1,0 +1,6 @@
+dataset,tier_I,tier_II,tier_III,order_insensitive,max_drift_tierI_monotone,max_drift_tierII_affine,min_drift_tierIII_affine,r2_champion_pearson,r2_champion_pearson_rank,n_methods
+maize,1,1,20,"r2_pearson, mean_r2_pearson",0.0,1.951592246561401e-16,0.08663593995119984,0.2181903143767727,1.0,5.0
+common bean,1,1,20,"r2_pearson, mean_r2_pearson",0.0,0.0,0.10555015708735548,0.45174466412773884,1.0,17.0
+spring wheat,1,1,20,"r2_pearson, mean_r2_pearson",0.0,1.2632046813995714e-16,0.09670932568245383,0.3983991100355478,1.0,17.0
+soybean,1,1,20,"r2_pearson, mean_r2_pearson",0.0,0.0,0.07503356219074792,0.3601432344459976,1.0,26.0
+Chinese maize (CUBIC),1,1,20,"r2_pearson, mean_r2_pearson",0.0,0.0,0.14751297369468477,0.34015153845961327,1.0,17.0

@@ -1,0 +1,13 @@
+calibrate_on,predict,q,nominal_width,coverage,block,quantity,value,ci_lo,ci_hi
+error-magnitude (14),correlation (6),3.0,7.0,0.5611111111111112,leave_one_family_out,,,,
+correlation (6),error-magnitude (14),7.5,16.0,0.9452380952380953,leave_one_family_out,,,,
+error-magnitude (14),slope (2),3.0,7.0,0.4666666666666667,leave_one_family_out,,,,
+all but slope (20),slope (2),8.0,17.0,0.8,leave_one_family_out,,,,
+,,,,,width_summary,conformal_q,9.0,,
+,,,,,width_summary,conformal_nominal_width,19.0,,
+,,,,,width_summary,conformal_median_width,17.0,11.0,19.0
+,,,,,width_summary,observed_range_median,12.0,8.0,12.0
+,,,,,width_summary,observed_iqr_median,3.0,2.0,5.75
+,,,,,width_summary,loo_metric_coverage_mean,0.9424242424242425,,
+,,,,,width_summary,loo_metric_q_min,8.0,,
+,,,,,width_summary,loo_metric_q_max,9.0,,

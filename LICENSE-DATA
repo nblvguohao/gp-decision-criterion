@@ -1,0 +1,27 @@
+The derived data files in this archive -- the files under analysis/*/results/ that
+the code in this archive computes -- are released under the Creative Commons
+Attribution 4.0 International licence (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+They are computed from the third-party primary datasets listed in DATA_SOURCES.md.
+
+The following files are NOT ours and are NOT covered by this licence. They remain
+under the terms of their original sources, which DATA_SOURCES.md records file by file:
+
+  - everything under data/raw/ (third-party primary data, and direct summaries of
+    them kept beside them);
+  - in analysis/g2f_leaderboard/results/:
+      Final_Observed_Yield.csv            (competition answer key)
+      1_Submission_Template_2022.csv      (competition template)
+      CLAC_repo_submission5.csv, EnBiSys_sub243568.csv,
+      KernelOfTruth_sub244906.csv, KernelOfTruth_sub244944.csv,
+      KernelOfTruth_sub244953.csv, MPB_Group_repo_prediction.csv,
+      NicheSquad_sub244985.csv            (team prediction files; no licence declared
+                                           by the teams, included for verification)
+      Supplemental_Table_S1_GENETICS-2024-307594.tsv,
+      Supplemental_Table_S3_GENETICS-2024-307594.tsv
+                                          (published supplementary tables)
+      edition2024/                        (2024 leaderboard retrieved from EvalAI)
+
+Users who redistribute any of these files must comply with the terms of that file's
+original source, not with this licence.

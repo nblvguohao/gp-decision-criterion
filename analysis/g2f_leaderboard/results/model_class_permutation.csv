@@ -1,0 +1,9 @@
+scope,model_class,n,mean_move,perm_p
+all 30 teams,Classical Machine Learning,17,0.058823529411764705,0.98085
+all 30 teams,Linear/Mixed/BLUP,14,0.5,0.7591
+all 30 teams,Deep Learning/Neural Net,9,-0.1111111111111111,0.98065
+all 30 teams,Ensemble Model,14,-1.2142857142857142,0.42735
+27 labelled teams,Classical Machine Learning,17,0.058823529411764705,0.77975
+27 labelled teams,Linear/Mixed/BLUP,14,0.5,0.9613
+27 labelled teams,Deep Learning/Neural Net,9,-0.1111111111111111,0.81035
+27 labelled teams,Ensemble Model,14,-1.2142857142857142,0.26495

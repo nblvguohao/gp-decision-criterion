@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software or the derived data, please cite it using the metadata below."
+title: "Code and derived data for: A decision-based criterion for comparing genomic prediction methods across environments"
+abstract: >-
+  Analysis code and derived data for a decision-based criterion that decides which
+  accuracy metrics can rank genomic prediction methods for within-environment
+  selection, applied to the Genomes to Fields 2022 maize competition and to common
+  bean, spring wheat and soybean method panels.
+type: software
+repository-code: "https://github.com/nblvguohao/gp-decision-criterion"
+version: 1.2.0
+date-released: 2026-09-24
+license: MIT
+authors:
+  - family-names: Lv
+    given-names: Guohao
+    email: lvguohao@stu.ahau.edu.cn
+    affiliation: "School of Artificial Intelligence, and Anhui Province Key Laboratory of Intelligent Agricultural Technology and Equipment, Anhui Agricultural University, Hefei 230036, China"
+    orcid: "https://orcid.org/0009-0007-4334-9818"
+  - family-names: Gu
+    given-names: Lichuan
+    email: glc@ahau.edu.cn
+    orcid: "https://orcid.org/0000-0002-3768-8203"
+    affiliation: "School of Artificial Intelligence, and Anhui Province Key Laboratory of Intelligent Agricultural Technology and Equipment, Anhui Agricultural University, Hefei 230036, China"
+keywords:
+  - genomic selection
+  - genomic prediction
+  - evaluation metrics
+  - genotype-by-environment interaction
+  - selection response
+  - prediction competition
+  - reproducibility
+references:
+  - type: unpublished
+    title: "A decision-based criterion for comparing genomic prediction methods across environments"
+    authors:
+      - family-names: Lv
+        given-names: Guohao
+      - family-names: Gu
+        given-names: Lichuan
+    year: 2026

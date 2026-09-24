@@ -1,0 +1,31 @@
+team,median_rank,lo,hi,width
+CLAC,1,1,10,10
+phenomaize,2,1,11,11
+Purdue,3,1,12,12
+CGM,4,1,13,13
+UCD_MegaLMM,5,1,14,14
+SmAL,6,1,15,15
+igorkf,7,1,16,16
+ML_APT,8,1,17,17
+DataJanitors,10,2,20,19
+AgroStat,11,2,20,19
+MPB_Group,11,2,20,19
+AIBreeding,12,3,21,19
+arulrich,12,3,21,19
+AllModelsAreWrong,13,4,22,19
+CropsAreCool,15,6,24,19
+CropEnthusiast,17,8,26,19
+agAdaptAR,18,9,27,19
+supermanwasd,19,10,28,19
+Kernel of Truth,20,11,29,19
+DeepCropVision,20,11,29,19
+BioSense,20,11,29,19
+G2P,22,13,30,18
+cropmodel,23,14,30,17
+AIMaize,24,16,30,15
+EnBiSys,25,16,30,15
+gartybois,25,16,30,15
+Genetwister,26,17,30,14
+Niche Squad,28,19,30,12
+uwaBioinfo,28,19,30,12
+TinyAfrica,30,21,30,10

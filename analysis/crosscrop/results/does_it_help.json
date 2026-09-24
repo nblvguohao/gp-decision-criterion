@@ -1,0 +1,72 @@
+{
+ "MAIZE (5 verified G2F submissions)": {
+  "mean_RMSE (Tier III, 2022 official)": 0.06893844353128095,
+  "mean_MAE (Tier III)": 0.06644971942649625,
+  "mean_r2_score (Tier III)": 0.0251935528406622,
+  "mean_pearson_r (Tier II, 2024 official)": 0.07527033974819011,
+  "mean_spearman_r (Tier I)": 0.13047267398865622,
+  "mean_NDCG@10% (Tier I)": 0.12637807478148705,
+  "oracle": 0.15796379594290538,
+  "random": 0.06240211332461997
+ },
+ "COMMON BEAN": {
+  "mean_RMSE (Tier III, 2022 official)": 0.6545645563149078,
+  "mean_MAE (Tier III)": 0.6491273932998641,
+  "mean_r2_score (Tier III)": 0.6720131052396293,
+  "mean_pearson_r (Tier II, 2024 official)": 0.6447665078317545,
+  "mean_spearman_r (Tier I)": 0.6483040520760962,
+  "mean_NDCG@10% (Tier I)": 0.6734896551316132,
+  "oracle": 0.7386786864967391,
+  "random": 0.5286294300488908
+ },
+ "COMMON BEAN (unaugmented)": {
+  "mean_RMSE (Tier III, 2022 official)": 0.6545645563149078,
+  "mean_MAE (Tier III)": 0.6491273932998641,
+  "mean_r2_score (Tier III)": 0.6720131052396293,
+  "mean_pearson_r (Tier II, 2024 official)": 0.6447665078317545,
+  "mean_spearman_r (Tier I)": 0.6483040520760962,
+  "mean_NDCG@10% (Tier I)": 0.6742251572795516,
+  "oracle": 0.7386786864967391,
+  "random": 0.6332069075845951
+ },
+ "SPRING WHEAT (FHB)": {
+  "mean_RMSE (Tier III, 2022 official)": 0.24217165790839495,
+  "mean_MAE (Tier III)": 0.23261019667207342,
+  "mean_r2_score (Tier III)": 0.18822671073693784,
+  "mean_pearson_r (Tier II, 2024 official)": 0.33772239891508066,
+  "mean_spearman_r (Tier I)": 0.2912341682508892,
+  "mean_NDCG@10% (Tier I)": 0.2517489783983628,
+  "oracle": 0.3944106496938094,
+  "random": 0.18136835502860382
+ },
+ "SPRING WHEAT (FHB) (unaugmented)": {
+  "mean_RMSE (Tier III, 2022 official)": 0.24217165790839495,
+  "mean_MAE (Tier III)": 0.23261019667207342,
+  "mean_r2_score (Tier III)": 0.18822671073693784,
+  "mean_pearson_r (Tier II, 2024 official)": 0.33772239891508066,
+  "mean_spearman_r (Tier I)": 0.2912341682508892,
+  "mean_NDCG@10% (Tier I)": 0.2829511150206722,
+  "oracle": 0.3884942407643318,
+  "random": 0.15287585527063816
+ },
+ "SOYBEAN": {
+  "mean_RMSE (Tier III, 2022 official)": 0.3678365818359734,
+  "mean_MAE (Tier III)": 0.3394594188408937,
+  "mean_r2_score (Tier III)": 0.31464248970761155,
+  "mean_pearson_r (Tier II, 2024 official)": 0.54027806090759,
+  "mean_spearman_r (Tier I)": 0.5354074702734222,
+  "mean_NDCG@10% (Tier I)": 0.5401062508912332,
+  "oracle": 0.5415953314393022,
+  "random": 0.2793981143361671
+ },
+ "SOYBEAN (unaugmented)": {
+  "mean_RMSE (Tier III, 2022 official)": 0.3678365818359734,
+  "mean_MAE (Tier III)": 0.3394594188408937,
+  "mean_r2_score (Tier III)": 0.31464248970761155,
+  "mean_pearson_r (Tier II, 2024 official)": 0.54027806090759,
+  "mean_spearman_r (Tier I)": 0.5354074702734222,
+  "mean_NDCG@10% (Tier I)": 0.5401062508912332,
+  "oracle": 0.5415953314393022,
+  "random": 0.3277143100769112
+ }
+}

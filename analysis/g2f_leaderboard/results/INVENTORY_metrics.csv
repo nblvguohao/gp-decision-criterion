@@ -1,0 +1,8 @@
+file,rows,scored_n,envs,RMSE,meanRMSE,r,pred_sd,matches,diff
+CLAC_repo_submission5.csv,11555,10290,23,2.4679,2.3418,0.6329,1.67,CLAC/243555,1.46e-02
+MPB_Group_repo_prediction.csv,11555,10290,23,2.5873,2.45,0.557,1.426,ML_APT/244778,1.94e-02
+KernelOfTruth_sub244906.csv,11555,10290,23,3.0861,2.9294,0.0868,0.415,Kernel of Truth/244906,4.05e-07
+KernelOfTruth_sub244953.csv,11555,10290,23,3.1973,3.0346,-0.0676,0.638,Kernel of Truth/244953,4.76e-07
+EnBiSys_sub243568.csv,11555,10290,23,3.4207,3.0613,0.2067,1.243,EnBiSys/243568,4.09e-07
+KernelOfTruth_sub244944.csv,11555,10290,23,3.2998,3.105,0.4981,0.667,Kernel of Truth/244944,4.88e-07
+NicheSquad_sub244985.csv,11555,10290,23,3.5712,3.301,0.1321,1.74,Niche Squad/244985,3.91e-07
