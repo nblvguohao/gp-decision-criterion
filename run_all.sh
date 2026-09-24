@@ -67,6 +67,7 @@ run analysis/crosscrop/code/copula_bridge.py     "copula benchmark for the breed
 run analysis/crosscrop/code/threshold_theory.py  "normal-theory threshold and design grid   -> Tables S10-S11, Fig. 5a"
 run analysis/g2f_leaderboard/code/selection_rule_sensitivity.py "which submission stands for a team -> Table S19"
 run analysis/crosscrop/code/does_it_help.py          "does scoring on an admissible metric help?"
+run analysis/crosscrop/code/composition_sensitivity.py "outcome test under changes to panel composition -> Section 3.3, Table S22"
 run analysis/crosscrop/code/unaugmented_panels.py  "clustered reversal intervals and unaugmented panels -> Tables S4, 2"
 run analysis/crosscrop/code/monotone_test_panels.py        "monotone test, 22 metrics        -> Fig. 1b"
 run analysis/crosscrop/code/partition.py             "admissibility partition, every dataset -> Table 2, Fig. 3a"
@@ -89,6 +90,11 @@ run analysis/crosscrop/code/build_tableS2.py         "Supplementary Table S2 as 
 # Claims that were tested and withdrawn. Kept so the falsification is visible.
 run analysis/crosscrop/code/scope_conditions.py      "[withdrawn] scope conditions"
 run analysis/crosscrop/code/connectivity_test.py     "[withdrawn] genotype connectivity as a cause"
+# Exploratory analyses of 9 September 2026, not carried into the paper (Supplementary Section S16).
+run analysis/easygese/code/collapse_test.py          "[exploratory] reversal after averaging genotypes over environments"
+if [ -f "${GP_DATA:-data/raw}/easygese/datasets/results_raw.csv" ]; then
+  run analysis/easygese/code/reorder.py              "[exploratory] Pearson r against RMSE on EasyGeSe"
+fi
 
 # ---------------------------------------------------------------- stage 5
 run analysis/tcj_figures/fig1.py    "Fig. 1"

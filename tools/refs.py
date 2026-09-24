@@ -110,4 +110,10 @@ REFS = {
 "kondratev2026": "A.Y. Kondratev, E. Ianovski, E. Voronina, J. Crossa, An axiomatic approach to cultivar ranking in multi-environment trials, bioRxiv (2026) 2026.06.27.734959. https://doi.org/10.64898/2026.06.27.734959 (preprint).",
 "fieldwelsh2007":"C.A. Field, A.H. Welsh, Bootstrapping clustered data, J. R. Stat. Soc. B 69 (2007) 369–390. https://doi.org/10.1111/j.1467-9868.2007.00593.x.",
 "viglione2026": "V. Viglione, L. Paleari, A. Tondelli, C. Marchetti, R. Confalonieri, Accuracy, robustness and the Occam’s razor in model-aided genomic prediction, Agric. For. Meteorol. 390 (2026) 111483. https://doi.org/10.1016/j.agrformet.2026.111483.",
+# --- added 2026-09-24 (verified against Crossref on that date) --------------
+"schrauf2021":  "M.F. Schrauf, G. de los Campos, S. Munilla, Comparing genomic prediction models by means of cross validation, Front. Plant Sci. 12 (2021) 734512. https://doi.org/10.3389/fpls.2021.734512.",
+"hamblin1986":  "J. Hamblin, M.J. de O. Zimmermann, Breeding common bean for yield in mixtures, Plant Breed. Rev. 4 (1986) 245–272. https://doi.org/10.1002/9781118061015.ch8.",
+"caballero2026":"E. Caballero, J. Garcia-Abadillo, D. Jarquin, Missing comparability: when genomic selection faces field variability. A case study in soybeans, Plant Genome 19 (2026) e70264. https://doi.org/10.1002/tpg2.70264.",
+"yan2026bench": "M. Yan, W. Wang, Y. Zhang, H. Guo, Z. Xue, X. Wang, et al., Standardizing benchmarks for plant genomic prediction, Agronomy 16 (2026) 1131. https://doi.org/10.3390/agronomy16121131.",
+"eckhoff2026":  "W. Eckhoff, F. Parat, G. Bracho-Mujica, C. Flamm, D. Bustos-Korts, H.P. Piepho, Tailoring AI and ML models for genotype-by-environment prediction leveraging environmental covariates: a European rye example, Theor. Appl. Genet. 139 (2026) 206. https://doi.org/10.1007/s00122-026-05280-z.",
 }

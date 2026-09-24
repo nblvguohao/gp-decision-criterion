@@ -28,8 +28,9 @@ figure in the manuscript from public data.
 | 129 of the 231 metric pairs reverse more than 5 % of team pairs (BH, FDR 5 %) | `analysis/g2f_leaderboard/code/reversal_tests.py` | `reversal_tests.csv`, `reversal_by_class.csv` |
 | A published rank spans a median of 12 of 30 places across the official metrics | `analysis/crosscrop/code/rank_census.py`, `analysis/g2f_leaderboard/code/rank_intervals.py` | `rank_census.csv`, `rank_intervals.csv` → Fig. 4 |
 | The method panels include GBLUP and marker × environment GBLUP, fitted by REML on the same marker principal components as the ridge baselines | `analysis/crosscrop/code/mixed_models.py`, `panel_bean.py`, `panel_ursn.py`, `panel_nust.py`, `panel_china.py` | `*_panel_wide.csv` |
+| Without the two GBLUP models the correlation family still leads in soybean and spring wheat; leaving out one base method at a time changes the soybean result in no panel | `analysis/crosscrop/code/composition_sensitivity.py` | `composition_sensitivity.csv` → Table S22 |
 | Which metric family selects better material follows the decision | `analysis/crosscrop/code/does_it_help.py`, `decision_swap.py` | `does_it_help.json`, `decision_swap.csv` → Tables S7, S14 |
-| For selection on genotype means across environments, the mean within-environment rank correlation guides the choice of method as well as that decision's own admissible metric where the outcome is reliable (common bean, soybean) | `analysis/crosscrop/code/decision_genotype_means.py` | `decision_genotype_means.csv` → Table S21 |
+| For selection on genotype means across environments, the mean within-environment rank correlation shows no detectable difference from that decision's own admissible metric where the outcome is reliable (common bean, soybean) | `analysis/crosscrop/code/decision_genotype_means.py` | `decision_genotype_means.csv` → Table S21 |
 | Realised selection differentials fall 0.13–0.31 SD below i·r in the verified submissions | `analysis/crosscrop/code/breeder_gap_se.py`, `copula_bridge.py` | `breeder_gap_se.csv`, `breeder_gap_panels.csv` (panels also against the finite-population expectation, `gap_fin`), `copula_bridge.csv` |
 | The accuracy gap a trial resolves is 0.066–0.213 in the panels, 0.028 under the Gaussian model at the competition's design and 0.04–0.12 after calibration to the panels; across the Gaussian design grid it falls as about 3/√N in genotype–environment cells N | `analysis/crosscrop/code/threshold_model.py`, `threshold_estimate.py`, `threshold_theory.py` | `threshold_estimates.csv`, `threshold_theory.csv`, `threshold_design.csv` → Fig. 5 |
 | The ceiling set by measurement error is 0.61 (single plot) to 0.74 (two-plot mean); the winner reaches 48–58 % of it | `analysis/crosscrop/code/heritability_ceiling_A8.py` | `heritability_ceiling_A8*.csv` |
@@ -85,6 +86,7 @@ analysis/
     code/
     results/           method panels (Env, k, y, p, method) and per-dataset output
   tcj_figures/         Fig. 1-5 and Fig. S1-S3, as 600 dpi PNG and vector PDF
+  easygese/            two exploratory analyses (Supplementary Section S16), not used for any result
 data/raw/              primary data, by dataset
 tools/                 manuscript support: reference database and number check
 ```

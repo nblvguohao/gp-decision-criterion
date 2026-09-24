@@ -806,12 +806,14 @@ def build_registry():
     reg("§3.3", "NDCG@10% 回收范围 (春小麦最低, 大豆最高)", r"the top-weighted NDCG@10 % ranges from " + N + " % in spring wheat to " + N + " % in soybean",
         lambda: [D.recov("spring wheat", "mean_NDCG"), D.recov("soybean", "mean_NDCG")], DIH,
         note_fn=lambda: "" if min(D.recov(d, "mean_NDCG") for d in NONMAIZE) == D.recov("spring wheat", "mean_NDCG") and max(D.recov(d, "mean_NDCG") for d in NONMAIZE) == D.recov("soybean", "mean_NDCG") else "端点并非春小麦/大豆!")
-    reg("§3.3", "玉米各规则回收", r"`mean_spearman_r` recovers (\d+) %, `mean_pearson_r` (\d+) %, `mean_RMSE` (\d+) % and `mean_r2_score` " + N + " %",
-        lambda: [D.recov("maize", r) for r in ("mean_spearman_r", "mean_pearson_r", "mean_RMSE", "mean_r2_score")], DIH)
-    reg("§3.3", "玉米绝对阈值: Pearson 领先而 Spearman 不", r"under the absolute target `mean_pearson_r` leads `mean_RMSE` there, " + N + r" \[" + N + ", " + N + r"\], while `mean_spearman_r` does not, " + N + r" \[" + N + ", " + N + r"\]",
-        lambda: [100 * D.paired("maize", "D2", c) for c in ("paired_pearson_minus_rmse", "paired_ci_lo", "paired_ci_hi")]
-                + [100 * D.paired("maize", "D2", c) for c in ("paired_spearman_minus_rmse", "paired_spearman_ci_lo", "paired_spearman_ci_hi")], RDS + " D2 maize")
-
+    CS = f"{X}/composition_sensitivity.csv"
+    _cs = lambda: pd.read_csv(CS)
+    def _fam(ds, panel, removed):
+        r = _cs().query("dataset == @ds and panel == @panel and removed == @removed").iloc[0]
+        return [100 * r.corr_lo, 100 * r.corr_hi, 100 * r.err_lo, 100 * r.err_hi]
+    reg("§3.3", "去掉两个 GBLUP 后两族回收 (大豆、春小麦, 增广面板)",
+        r"without them the correlation family still leads in soybean \((\d+)–(\d+) % against (\d+)–(\d+) %\) and spring wheat \((\d+)–(\d+) % against (\d+)–(\d+) %; Supplementary Table S22\)",
+        lambda: _fam("soybean", "augmented", "GBLUP models") + _fam("spring wheat", "augmented", "GBLUP models"), CS)
     # ================= 3.4
     reg("§3.4", "15 个比较全部为负; 三个强度的均值; f=0.10 五个缺口",
         r"falls below iₖ · r in all (\d+) comparisons: by a mean of " + N + ", " + N + " and " + N + " phenotypic standard deviations at f = 0\.05, 0\.10 and 0\.20, and at f = 0\.10 by " + N + ", " + N + ", " + N + ", " + N + " and " + N + " SD",
@@ -941,8 +943,6 @@ def build_registry():
         lambda: [round((cells_law(0.10)[2] / 0.05) ** 2, -2), round((cells_law(0.10)[2] / 0.03) ** 2, -3)], TD)
     reg("§4.3", "竞赛测试集约 10,000 单元 (445 × 23)", r"(10,000), the size of the competition's test set",
         lambda: [round(445 * 23, -3)], "§3.5 竞赛设计参数 445 基因型/环境 × 23 环境")
-    reg("§4.3", "天花板与冠军值", r"the ceiling is " + N + "–" + N + " against the winning team's " + N,
-        lambda: [D.hq("maize_G2F", "ceiling_n1"), D.hq("maize_G2F", "ceiling_n2"), D.r_top[0]], HB + "; " + S1f)
     reg("§4.4", "每份提交都被高估, 有限群体校正解释为零", r"overstated the realised selection differential of (every) verified submission, and (neither finite-population correction nor the tied predictions) explain it",
         lambda: [bool((D.gap.gap < 0).all()), max(D.fin_explained) < 0.5], GAP + "; " + fin_src, kind="bool")
     reg("§4.6", "会排除的指标数", r"excludes (twenty) of the (twenty-two) metrics here",

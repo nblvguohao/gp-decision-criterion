@@ -116,8 +116,13 @@ for label, T in tables:
     lo_ci, hi_ci = boot_median_range(R, rng)
     Rc = R.to_numpy()
     escape = float(np.mean((Rc < lo[:, None]) | (Rc > hi[:, None])))
-    # the leader under the 2024-style official metric, and its observed span
-    lead = T.index[int(np.argmax(orient(T, "mean_pearson_r")))]
+    # the leader under the 2024-style official metric, and its observed span. The
+    # miscalibration variants are affine maps of their parent and tie with it on this
+    # metric, so the leader is taken among the base methods: a variant is never reported
+    # as the leader merely by tie order.
+    score = np.asarray(orient(T, "mean_pearson_r"), dtype=float)
+    cand = [i for i, m in enumerate(T.index) if "__" not in str(m)] or list(range(len(T)))
+    lead = T.index[max(cand, key=lambda i: score[i])]
     li = list(T.index).index(lead)
     rows.append(dict(
         dataset=label, methods=M,

@@ -194,6 +194,18 @@ the exploratory run of all 23 traits through an earlier version of the panel tha
 Supplementary Section S11 summarises. `china_invariance.csv`, from the same earlier
 version, is not reported and is not included.
 
+## EasyGeSe — exploratory only (Supplementary Section S16)
+
+| | |
+|---|---|
+| Source | Quesada-Traver et al. (2025) *BMC Genomics* 26:953, doi:10.1186/s12864-025-12129-0; data doi:10.5281/zenodo.15348871 |
+| Licence | **CC BY 4.0** (Zenodo record) |
+| Files | `datasets/results_raw.csv` — the benchmark's own per-split Pearson *r* and RMSE for 10 models on 93 traits in 10 species |
+| In this archive | yes — `data/raw/easygese/datasets/results_raw.csv` |
+| Consumed by | `analysis/easygese/code/reorder.py` |
+
+An exploratory check, reported in Supplementary Section S16 and used for no result in the paper.
+
 ---
 
 ## Summary
@@ -208,6 +220,7 @@ version, is not reported and is not included.
 | Common bean VEF | CC BY 4.0 | yes |
 | Spring wheat URSN | CC0 1.0 | yes |
 | Soybean NUST | CC BY 4.0 / USDA | yes |
+| EasyGeSe (exploratory, Supplementary Section S16) | CC BY 4.0 | yes (the results table) |
 | Chinese maize CUBIC (Supplementary Section S11) | phenotypes CC BY-NC-ND 4.0; genotypes not declared | **no — fetch yourself** |
 
 Licences were read from the DataCite, Crossref and Dataverse records on
