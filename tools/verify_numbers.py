@@ -521,35 +521,26 @@ def build_registry():
     fin_src = f"{GAP} gap (i_inf·r) + {COP} gap_N (i_fin·r)"
 
     # ================= Abstract
-    reg("摘要", "竞赛设计下的高斯值、迁移范围、第1–2名差距、闭合队伍对比例",
-        r"a Gaussian model puts the accuracy gap needed before the more accurate method reliably selects better material at " + N + r" in within-environment correlation, and calibration to the three panels gives " + N + "–" + N + r"; the first two teams differ by " + N + r", and (\d+) % of all team pairs fall below it",
-        lambda: [D.tmz.theory_lam05, D.tmz.transfer_lo, D.tmz.transfer_hi, D.gap12,
-                 100 * D.pairs_closer(D.tmz.theory_lam05)[0] / D.pairs_closer(D.tmz.theory_lam05)[1]], TT + "; " + S1f)
-    reg("摘要", "官方指标数与各档数",
-        r"of the competition's (twenty-two) official metrics it admits (one), the mean within-environment rank correlation; the within-environment Pearson correlation is unmoved by calibration only, and (twenty) — including RMSE — fail",
+    reg("摘要", "官方指标数与各档数", r"Of the competition's (twenty-two) official metrics the criterion admits (one), the mean within-environment rank correlation; the 2024 metric is protected against calibration only, and (twenty) — including RMSE — fail",
         lambda: [len(D.pmz), nT("I"), nT("III")], PM)
-    reg("摘要", "两个官方指标间反转率及CI；名次跨度",
-        r"Switching between the two official metrics reverses (\d+) % of team pairs \(95 % CI (\d+)–(\d+) %\)\.",
-        lambda: [100 * s_("maize", "reversal"), 100 * s_("maize", "ci_lo"), 100 * s_("maize", "ci_hi")], SUM)
-    reg("摘要", "两个相关指标互有胜负 (三面板中 Pearson−Spearman 回收之差符号不一)", r"(neither correlation metric consistently selects better material)",
-        lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1)], DIH, kind="bool")
-    reg("摘要", "高斯设计网格: Δr* ≈ k/√N, f = 0.10 时 k ≈ 3", r"The Gaussian gap falls as about (\d)/√N",
-        lambda: [cells_law(0.10)[2]], f"{X}/threshold_design.csv")
+    reg("摘要", "两个官方指标间反转率", r"Switching between the two official metrics reverses (\d+) % of team pairs\.",
+        lambda: [100 * s_("maize", "reversal")], SUM)
+    reg("摘要", "优势族随决策而定: D1 相关族在大豆/春小麦领先 (仅大豆显著), D2 误差族在春小麦/菜豆领先",
+        r"error-magnitude rankings trail the correlations for within-environment selection in (soybean and spring wheat) \(significantly in soybean\) and lead in spring wheat and common bean when the target is absolute",
+        lambda: [all(D.paired(d, "D1", c) > 0 for d in ("soybean", "spring wheat") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
+                 and all(D.paired(d, "D2", c) < 0 for d in ("spring wheat", "common bean") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
+                 and D.paired("soybean", "D1", "paired_ci_lo") > 0 and D.paired("soybean", "D1", "paired_spearman_ci_lo") > 0
+                 and D.paired("spring wheat", "D1", "paired_ci_lo") < 0 and D.paired("spring wheat", "D1", "paired_spearman_ci_lo") < 0],
+        RDS, kind="bool")
+    reg("摘要", "高斯设计网格 k/√N (f = 0.10); 竞赛设计下的高斯值; 第1–2名差距",
+        r"falls as about (\d)/√N with its N genotype–environment cells; at the competition's design it is " + N + r", an order of magnitude above the " + N + r" separating the first two teams",
+        lambda: [cells_law(0.10)[2], D.tmz.theory_lam05, D.gap12], f"{X}/threshold_design.csv; " + TT + "; " + S1f)
     reg("表1注", "大豆分析所用环境数 (≥25 个基因型) 与基因型数",
         r"the soybean analyses use the (\d+) of its environments that carry at least (\d+) genotypes, with ([\d,]+) genotypes",
         lambda: [(lambda o: [int((o.groupby("Env").k.nunique() >= 25).sum()), 25,
                              o[o.Env.isin(o.groupby("Env").k.nunique().loc[lambda c: c >= 25].index)].k.nunique()])(
                      D.panel("soybean")[D.panel("soybean").method == D.panel("soybean").method.iloc[0]])][0],
         PANEL_OF["soybean"][0])
-    reg("摘要", "优势族随决策而定: D1 相关族在大豆/春小麦领先 (仅大豆显著), D2 误差族在春小麦/菜豆领先 (仅春小麦显著)",
-        r"error-magnitude rankings trail them in (soybean and spring wheat) \(significantly in soybean\) and lead when the target is absolute, which reads calibration \(spring wheat, common bean\)",
-        lambda: [all(D.paired(d, "D1", c) > 0 for d in ("soybean", "spring wheat") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
-                 and all(D.paired(d, "D2", c) < 0 for d in ("spring wheat", "common bean") for c in ("paired_pearson_minus_rmse", "paired_spearman_minus_rmse"))
-                 and D.paired("soybean", "D1", "paired_ci_lo") > 0 and D.paired("soybean", "D1", "paired_spearman_ci_lo") > 0
-                 and D.paired("spring wheat", "D1", "paired_ci_lo") < 0 and D.paired("spring wheat", "D1", "paired_spearman_ci_lo") < 0
-                 and D.paired("spring wheat", "D2", "paired_ci_hi") < 0 and D.paired("spring wheat", "D2", "paired_spearman_ci_hi") < 0
-                 and D.paired("common bean", "D2", "paired_ci_hi") > 0 and D.paired("common bean", "D2", "paired_spearman_ci_hi") > 0],
-        RDS, kind="bool")
     reg("§2.2", "数据集数/物种数/性状类别数", r"(Four) multi-environment datasets spanning (four) species and (two) trait classes",
         lambda: [len(D.summ), 4, 2], SUM + " 行数; §2.2 (玉米、菜豆、小麦、大豆; 产量与病害)")
     reg("§2.2", "G2F 队伍数/环境数", r"(Thirty) teams were scored on a 2022 test set of (\d+) environments",
@@ -911,7 +902,7 @@ def build_registry():
     reg("§3.7", "CUBIC 自身预测上的分级与判据一致", r"GPverdict (recovers the same partition) from the population's own predictions",
         lambda: [bool(_gv()["tier_I"] == ["hit_rate", "ndcg", "sel_diff", "spearman"] and _gv()["tier_II"] == ["pearson"] and len(_gv()["tier_III"]) == 6)], GVJ, kind="bool")
     reg("§3.7", "CUBIC 领先者与并列者的秩相关、可分辨差距",
-        r"first by mean within-environment rank correlation \(" + N + r"\), with random forest \(" + N + r"\) and gradient boosting \(" + N + r"\) inside the smallest gap the trial resolves, " + N + ";",
+        r"first by mean within-environment rank correlation \(" + N + r"\), with random forest \(" + N + r"\) and gradient boosting \(" + N + r"\) inside the smallest gap the trial resolves, " + N + r" \(Fig\. 6b\);",
         lambda: [_rk("ens_ml"), _rk("rf"), _rk("gbm"), _gv()["gap"]], GVJ)
     reg("§3.7", "CUBIC 并列集合恰为这三个方法, 且集成领先", r"(It ranks an ensemble of random forest, gradient boosting and a multilayer perceptron first)",
         lambda: [bool(_gv()["leader"] == "ens_ml" and _gv()["tied"] == ["ens_ml", "rf", "gbm"])], GVJ, kind="bool")
@@ -996,19 +987,21 @@ def build_registry():
                  pd.read_csv(f"{X}/heritability_ceiling_A8.csv").query("dataset == 'maize_G2F'").plots.sum()],
         HB + f"; {X}/heritability_ceiling_A8.csv")
 
-    # ================= Table 1
-    t1 = {"G2F 2022": "maize", "VEF": "common bean", "URSN": "spring wheat", "NUST": "soybean"}
-    for lab, ds in t1.items():
-        reg("表1", f"{ds}: 方法数/环境数/每环境基因型数", r"\| " + re.escape(lab) + r" \|[^|]*\| (\d+) [^|]*\| (\d+) \| (\d+) \|",
-            (lambda ds=ds: [s(ds, "methods"), s(ds, "envs"), s(ds, "genos_per_env")]), SUM + " methods/envs/genos_per_env")
-    for lab, ds in list(t1.items())[1:]:
-        reg("表1", f"{ds}: 基础方法数", r"\| " + re.escape(lab) + r" \|[^|]*\| \d+ methods \((\d+) base\) \|",
-            (lambda ds=ds: [len(panel_methods()[ds])]), PANEL_OF[ds][0])
-        reg("表1", f"{ds}: 标记数", r"\| " + re.escape(lab) + r" \|[^|]*\|[^|]*\|[^|]*\|[^|]*\| ([\d,]+) \|",
-            (lambda ds=ds: [D.markers[ds]]), f"{RAW}/… 原始基因型", heavy=True)
+    # ================= Table 1 (datasets; maize, common bean, spring wheat, soybean)
+    ORDER = ["maize", "common bean", "spring wheat", "soybean"]
+    reg("表1", "方法数 (玉米队伍数; 面板方法数与基础方法数)",
+        r"\| Methods compared \(base methods\) \| (\d+) teamsᵃ \| (\d+) \((\d+)\) \| (\d+) \((\d+)\) \| (\d+) \((\d+)\) \|",
+        lambda: [s("maize", "methods")] + [x for ds in ORDER[1:] for x in (s(ds, "methods"), len(panel_methods()[ds]))],
+        SUM + " methods; " + ", ".join(PANEL_OF[d][0] for d in ORDER[1:]))
+    reg("表1", "环境数 / 每环境基因型数 (四列)",
+        r"\| Environments / genotypes per environment \|" + r" (\d+) / (\d+)‡? \|" * 4,
+        lambda: [x for ds in ORDER for x in (s(ds, "envs"), s(ds, "genos_per_env"))], SUM + " envs/genos_per_env")
+    reg("表1", "标记数 (三个面板)", r"\| Markers \| not used \| ([\d,]+) \| ([\d,]+) \| ([\d,]+) \|",
+        lambda: [D.markers[ds] for ds in ORDER[1:]], f"{RAW}/… 原始基因型", heavy=True)
     reg("表1", "大豆两种口径的每环境基因型数", r"the median over the method–environment cells that carry at least (\d+) genotypes, which in soybean is (\d+)",
         lambda: [PANEL_OF["soybean"][1], D.ttheory.loc["soybean", "n_per_env"]], f"{CC}/build_summary.py SETS; " + f"{X}/threshold_theory.csv n_per_env")
-    reg("表1", "G2F 已验证提交文件数", r"30 competition teams \((\d) verified submission files\)", lambda: [len(V5)], "V5")
+    reg("表1", "G2F 已验证提交文件数与队伍数", r"(five) verified submission files from (three) teams carry per-genotype predictions",
+        lambda: [len(V5), len({f.split("_sub")[0] for f in V5})], "V5")
 
     # ================= Table 2 (maize, common bean, spring wheat, soybean)
     reg("表2", "Tier I/II/III (四列)", r"\| Official metrics in Tier I / II / III \|" + r" (\d+) / (\d+) / (\d+) \|" * 4,

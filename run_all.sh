@@ -100,6 +100,7 @@ fi
 # ---------------------------------------------------------------- stage 5
 run analysis/tcj_figures/fig1.py    "Fig. 1"
 run analysis/tcj_figures/figs2_5.py "Fig. 2-5"
+run analysis/tcj_figures/fig6.py    "Fig. 6 (GPverdict)"
 run analysis/tcj_figures/supp_figs.py "Fig. S1-S3"
 
 printf '\n\033[1mdone.\033[0m Figures are in analysis/tcj_figures/ as 600 dpi PNG and vector PDF.\n'

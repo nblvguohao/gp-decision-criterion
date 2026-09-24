@@ -9,6 +9,7 @@ GPverdict itself lives in tool/gpverdict (public at github.com/nblvguohao/gpverd
 Writes analysis/crosscrop/results/gpverdict_validation.csv
        analysis/crosscrop/results/gpverdict_cubic.json
        analysis/crosscrop/results/gpverdict_cubic_methods.csv
+       analysis/crosscrop/results/gpverdict_cells.csv (Fig. 6c)
 """
 import json, os, sys
 sys.path.insert(0, "tool")
@@ -32,6 +33,23 @@ V = pd.DataFrame(V); V["abs_difference"] = (V.gpverdict - V.paper).abs()
 V.to_csv(f"{RES}/gpverdict_validation.csv", index=False)
 print(V.to_string(index=False))
 assert (V.abs_difference < 1e-9).all(), "GPverdict no longer reproduces the paper"
+
+# ---- design points for Fig. 6c: genotype-environment cells per method in each dataset (paper rules)
+G = "analysis/g2f_leaderboard/results"
+obs = pd.read_csv(f"{G}/Final_Observed_Yield.csv").rename(columns={"Yield_Mg_ha": "y", "Hybrid": "k"})
+mz = []
+for s in ["KernelOfTruth_sub244906", "KernelOfTruth_sub244944", "KernelOfTruth_sub244953", "EnBiSys_sub243568", "NicheSquad_sub244985"]:
+    pr = pd.read_csv(f"{G}/{s}.csv").rename(columns={"Yield_Mg_ha": "p", "Hybrid": "k"})
+    d = obs.merge(pr, on=["Env", "k"]).dropna(subset=["y", "p"]); d["method"] = s; mz.append(d)
+PTS = [("maize (G2F 2022 test set)", pd.concat(mz), 20)]
+for lab, f, mn in (("common bean", "bean_panel_wide.csv", 25), ("spring wheat", "ursn_panel_wide.csv", 12), ("soybean", "nust_panel_wide.csv", 25)):
+    Q = pd.read_csv(f"{RES}/{f}"); PTS.append((lab, Q[~Q.method.str.contains("__")], mn))
+cells = []
+for lab, Q, mn in PTS:
+    E = gv.env_table(gv.load(Q), 0.10, mn); c = float(E.groupby("method").n.sum().median())
+    cells.append(dict(dataset=lab, cells=c, resolvable_gap=gv.resolvable_gap(c, 0.10)))
+pd.DataFrame(cells).to_csv(f"{RES}/gpverdict_cells.csv", index=False)
+print(pd.DataFrame(cells).round(4).to_string(index=False))
 
 # ---- 2. CUBIC
 path = f"{RES}/china_panel_wide.csv"

@@ -96,7 +96,7 @@ tools/                 manuscript support: reference database and number check
 
 The criterion, the resolution threshold and the outcome test are released as GPverdict, a
 Python package with a command line and an in-browser web version: source and tests at
-https://github.com/nblvguohao/gpverdict (v1.0.0), web version at
+https://github.com/nblvguohao/gpverdict (v1.0.1), web version at
 https://nblvguohao.github.io/gpverdict/. A copy of the package used for the paper is in
 `tool/`.
 
