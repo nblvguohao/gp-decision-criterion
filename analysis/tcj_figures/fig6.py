@@ -67,7 +67,7 @@ for tl, m in zip(ax.get_yticklabels(), names):
 ax.set_xlim(0, 0.46); ax.set_ylim(-0.8, len(vals) - 0.2)
 ax.set_xlabel("mean within-environment rank correlation")
 ax.text(lead + 0.006, len(vals) - 4.6, f"gap the trial\nresolves:\n{gap:.3f}", ha="left", va="top", fontsize=7, color=C_ADM)
-ax.text(0.348, 3.0, f"CUBIC ear weight,\n17 methods, 5 sites\n\nfirst two {J['margin']:.4f}\napart: ≈{J['cells_to_resolve_margin']/1e6:.0f} million\ncells to resolve",
+ax.text(0.348, 3.0, "CUBIC ear weight,\n17 methods, 5 sites\n\nrank and Pearson\ncorrelations mark\nthe same three",
         fontsize=7, va="center", ha="left", color=INK)
 ax.text(-0.72, 1.035, "b", transform=ax.transAxes, fontsize=9, fontweight="bold", va="bottom")
 

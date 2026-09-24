@@ -906,9 +906,13 @@ def build_registry():
         lambda: [_rk("ens_ml"), _rk("rf"), _rk("gbm"), _gv()["gap"]], GVJ)
     reg("§3.7", "CUBIC 并列集合恰为这三个方法, 且集成领先", r"(It ranks an ensemble of random forest, gradient boosting and a multilayer perceptron first)",
         lambda: [bool(_gv()["leader"] == "ens_ml" and _gv()["tied"] == ["ens_ml", "rf", "gbm"])], GVJ, kind="bool")
-    reg("§3.7", "CUBIC 前两名之差与分辨所需单元数 (百万)",
-        r"the first two differ by " + N + r", a gap that would take about (\d+) million cells to resolve, and Pearson r puts random forest first",
-        lambda: [_gv()["margin"], _gv()["cells_to_resolve_margin"] / 1e6], GVJ)
+    reg("摘要", "GPverdict 在 CUBIC: 方法数与并列数", r"for (\d+) models in a Chinese maize population it identifies (three) that the trial cannot separate",
+        lambda: [_gv()["methods"], len(_gv()["tied"])], GVJ)
+    reg("摘要", "结果检验分不开秩相关与 Pearson (三面板中两者回收之差符号不一)", r"(the outcome tests do not separate the rank from the Pearson correlation)",
+        lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1)], DIH, kind="bool")
+    reg("§3.7", "按 Pearson 判定的并列集合与按秩相关相同", r"(places the same three methods inside that gap)",
+        lambda: [bool((lambda T: set(T.index[T.pearson.max() - T.pearson <= _gv()["gap"]]) == set(_gv()["tied"]))(
+            pd.read_csv(f"{X}/gpverdict_cubic_methods.csv", index_col=0)))], f"{X}/gpverdict_cubic_methods.csv", kind="bool")
     reg("§3.7", "CUBIC 中 Pearson 的第一名是随机森林", r"(Pearson r puts random forest first)",
         lambda: [bool(_gv()["pearson_leader"] == "rf")], GVJ, kind="bool")
     reg("§3.7", "GBLUP×E 落后领先者的差距", r"The marker × environment GBLUP, " + N + r" behind the leader",
@@ -918,9 +922,6 @@ def build_registry():
     reg("§3.7", "按品系拆分的结果检验: 三条规则回收范围与结果信度",
         r"the method each rule picks recovers (\d+)–(\d+) % of the attainable selection gain \(outcome reliability " + N + r"\)",
         lambda: [100 * min(_gv()["outcome"]["recovery"].values()), 100 * max(_gv()["outcome"]["recovery"].values()), _gv()["outcome"]["reliability"]], GVJ)
-    reg("摘要", "GPverdict 在 CUBIC: 方法数、并列数、前两名之差、所需单元数",
-        r"for (\d+) methods in a Chinese maize population it finds (three) that the trial cannot separate, the first two by " + N + r", a gap that would take about (\d+) million cells to resolve",
-        lambda: [_gv()["methods"], len(_gv()["tied"]), _gv()["margin"], _gv()["cells_to_resolve_margin"] / 1e6], GVJ)
 
     # ================= 3.6
     reg("§3.6", "反转率范围 (全部; 仅未增广)", r"reversal of (\d+)–(\d+) % of method pairs when the official metric changes, (\d+)–(\d+) % counting only unaugmented methods",
