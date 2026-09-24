@@ -738,8 +738,8 @@ def build_registry():
                  D.ris.loc["Tier I and II metrics only", "median_width"]], f"{G}/rank_interval_sensitivity.csv")
     reg("§3.2", "环境重抽区间占比", r"gives median intervals of (\d+)–(\d+) % of the board in the three panels",
         lambda: [100 * (D.rob.boot_width / D.rob.methods).min(), 100 * (D.rob.boot_width / D.rob.methods).max()], ROB + " boot_width/methods")
-    reg("§3.2", "环境重抽宽度为指标宽度的五分之一到一半", r"(a fifth to a half) of the width across metrics",
-        lambda: [bool((D.rob.loc[NONMAIZE].boot_width / D.rc.loc[NONMAIZE].conformal_median_width).between(0.18, 0.5).all())], ROB + "; " + RC, kind="bool",
+    reg("§3.2", "环境重抽宽度为指标宽度的五分之一到一半", r"(about a quarter to a half) of the width across metrics",
+        lambda: [bool((D.rob.loc[NONMAIZE].boot_width / D.rc.loc[NONMAIZE].conformal_median_width).between(0.2, 0.5).all())], ROB + "; " + RC, kind="bool",
         note_fn=lambda: ", ".join(f"{k} {v:.2f}" for k, v in (D.rob.loc[NONMAIZE].boot_width / D.rc.loc[NONMAIZE].conformal_median_width).items()))
 
     # ================= 3.3
@@ -811,6 +811,10 @@ def build_registry():
     def _fam(ds, panel, removed):
         r = _cs().query("dataset == @ds and panel == @panel and removed == @removed").iloc[0]
         return [100 * r.corr_lo, 100 * r.corr_hi, 100 * r.err_lo, 100 * r.err_hi]
+    reg("§3.3", "绝对阈值决策下玉米(5 份提交) Pearson 领先 RMSE, 区间不含 0",
+        r"in maize, from five submissions, (`mean_pearson_r` leads instead)",
+        lambda: [bool(D.paired("maize", "D2", "paired_ci_lo") > 0 and D.paired("maize", "D2", "paired_pearson_minus_rmse") > 0)],
+        RDS + " D2 maize", kind="bool")
     reg("§3.3", "去掉两个 GBLUP 后两族回收 (大豆、春小麦, 增广面板)",
         r"without them the correlation family still leads in soybean \((\d+)–(\d+) % against (\d+)–(\d+) %\) and spring wheat \((\d+)–(\d+) % against (\d+)–(\d+) %; Supplementary Table S22\)",
         lambda: _fam("soybean", "augmented", "GBLUP models") + _fam("spring wheat", "augmented", "GBLUP models"), CS)

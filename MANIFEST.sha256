@@ -197,4 +197,4 @@ ae95c703142b0ea53c599f60b401d07d83b6da84b1a1cc3890ff42fb11e3ba5e  ./tools/build_
 070b684379695fdce4aa84791c4569d5887c65d5555e4f2661ca4855ba80457a  ./tools/number_refs.py
 3afebe599c2dd7bf6f37d2df8c0bf90aa4997de527e3fe802ad8b36f90fcca58  ./tools/refs.py
 3c02a04d6c524c8036deb851f0df3ebd79557e1d07adfaaf3db889bf97501477  ./tools/unnumber_refs.py
-c2a6424fb6f97b9848f4ac4eba32a16cc88e437c7889f6cb6697b7ccdf0846c2  ./tools/verify_numbers.py
+690a2cd817fc3f8032dd3ee185a31df86fe6ebe717dfa1bf0a64f86f15946f2e  ./tools/verify_numbers.py
