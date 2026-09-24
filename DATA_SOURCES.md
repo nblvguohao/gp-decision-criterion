@@ -189,7 +189,8 @@ get it.
 
 Download instructions, file hashes and the site-label mapping are in
 `analysis/crosscrop/results/china_DATA_SOURCE.md`. The summary statistics the
-paper reports are included: `china_summary.csv` (Table S17) and `china_trait_sweep.csv`,
+paper reports are included: `china_summary.csv` (Table S17), `gpverdict_cubic.json` and
+`gpverdict_cubic_methods.csv` (Section 3.7, Table S23), and `china_trait_sweep.csv`,
 the exploratory run of all 23 traits through an earlier version of the panel that
 Supplementary Section S11 summarises. `china_invariance.csv`, from the same earlier
 version, is not reported and is not included.

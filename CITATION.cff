@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or the derived data, please cite it using the metadata below."
-title: "Code and derived data for: A decision-based criterion for comparing genomic prediction methods across environments"
+title: "Code and derived data for: A decision-based criterion and an open tool for choosing genomic prediction methods across environments"
 abstract: >-
   Analysis code and derived data for a decision-based criterion that decides which
   accuracy metrics can rank genomic prediction methods for within-environment
@@ -32,7 +32,7 @@ keywords:
   - reproducibility
 references:
   - type: unpublished
-    title: "A decision-based criterion for comparing genomic prediction methods across environments"
+    title: "A decision-based criterion and an open tool for choosing genomic prediction methods across environments"
     authors:
       - family-names: Lv
         given-names: Guohao

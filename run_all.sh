@@ -76,6 +76,7 @@ run analysis/crosscrop/code/tie_effect_on_gap.py     "tied predictions and the s
 run analysis/crosscrop/code/rank_census.py           "observed rank range across the 22 metrics -> Table 2, Table S15, Fig. 4"
 run analysis/crosscrop/code/decision_swap.py "outcome test under a changed decision -> Table S14"
 run analysis/crosscrop/code/decision_genotype_means.py "outcome test for selection on genotype means across environments -> Table S21"
+run analysis/crosscrop/code/gpverdict_applications.py "GPverdict: validation and the CUBIC verdict -> Section 3.7, Tables S23-S24"
 if [ -f analysis/crosscrop/results/china_panel_wide.csv ]; then
   run analysis/crosscrop/code/summary_china.py       "Chinese maize, CUBIC                  -> Table S17"
 fi

@@ -1,0 +1,120 @@
+{
+ "methods": 17,
+ "environments": 5,
+ "genotypes": 1400,
+ "cells": 6699,
+ "tier_I": [
+  "hit_rate",
+  "ndcg",
+  "sel_diff",
+  "spearman"
+ ],
+ "tier_II": [
+  "pearson"
+ ],
+ "tier_III": [
+  "mae",
+  "pooled_pearson",
+  "pooled_rmse",
+  "r2_score",
+  "rmse",
+  "slope"
+ ],
+ "leader": "ens_ml",
+ "pearson_leader": "rf",
+ "rmse_pick": "rf",
+ "ranking": [
+  [
+   "ens_ml",
+   0.34063406020492
+  ],
+  [
+   "rf",
+   0.339833983289627
+  ],
+  [
+   "gbm",
+   0.3225781839911147
+  ],
+  [
+   "gblup_gxe",
+   0.2873303283171359
+  ],
+  [
+   "ridge_pc60_lo",
+   0.26690632198689423
+  ],
+  [
+   "ridge_pc60_hi",
+   0.2669061620657157
+  ],
+  [
+   "gblup",
+   0.26687545601365914
+  ],
+  [
+   "knn10",
+   0.25881994962648375
+  ],
+  [
+   "mlp",
+   0.25806542934620696
+  ],
+  [
+   "ens_lin",
+   0.2550003401960178
+  ],
+  [
+   "reaction_norm_EC",
+   0.23257336176223586
+  ],
+  [
+   "ridge_pc30_lo",
+   0.22859956878198737
+  ],
+  [
+   "ridge_pc30_hi",
+   0.22859910179184162
+  ],
+  [
+   "ridge_pc15_lo",
+   0.21620040314219838
+  ],
+  [
+   "ridge_pc15_hi",
+   0.21620021015133467
+  ],
+  [
+   "ridge_pc5_hi",
+   0.04299059767805282
+  ],
+  [
+   "ridge_pc5_lo",
+   0.04298805042493836
+  ]
+ ],
+ "gap": 0.03623449628054159,
+ "panel_range": [
+  0.05435174442081238,
+  0.15218488437827468
+ ],
+ "tied": [
+  "ens_ml",
+  "rf",
+  "gbm"
+ ],
+ "margin": 0.000800076915292991,
+ "cells_to_resolve_margin": 13740133.572616765,
+ "reversal_rmse_pearson": 0.13970588235294118,
+ "method_pairs": 136,
+ "outcome": {
+  "design": "genotype split within environments",
+  "splits": 200,
+  "recovery": {
+   "spearman": 0.787663426460245,
+   "pearson": 0.8276598109907305,
+   "rmse": 0.9002265264808356
+  },
+  "reliability": 0.7967487684729064
+ }
+}

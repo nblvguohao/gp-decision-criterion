@@ -529,18 +529,12 @@ def build_registry():
         r"of the competition's (twenty-two) official metrics it admits (one), the mean within-environment rank correlation; the within-environment Pearson correlation is unmoved by calibration only, and (twenty) — including RMSE — fail",
         lambda: [len(D.pmz), nT("I"), nT("III")], PM)
     reg("摘要", "两个官方指标间反转率及CI；名次跨度",
-        r"reverses (\d+) % of team pairs \(95 % CI (\d+)–(\d+) %\), and team rank spans a median of (\d+) of (\d+) places",
-        lambda: [100 * s_("maize", "reversal"), 100 * s_("maize", "ci_lo"), 100 * s_("maize", "ci_hi"),
-                 D.rc.loc["maize", "census_median_range"], D.rc.loc["maize", "methods"]], SUM + "; " + RC)
-    reg("摘要", "缺口均值范围 (三个选择强度)",
-        r"verified submissions, by " + N + "–" + N + " phenotypic SD",
-        lambda: [min(fmeans()), max(fmeans())], GAP)
+        r"Switching between the two official metrics reverses (\d+) % of team pairs \(95 % CI (\d+)–(\d+) %\)\.",
+        lambda: [100 * s_("maize", "reversal"), 100 * s_("maize", "ci_lo"), 100 * s_("maize", "ci_hi")], SUM)
     reg("摘要", "两个相关指标互有胜负 (三面板中 Pearson−Spearman 回收之差符号不一)", r"(neither correlation metric consistently selects better material)",
         lambda: [bool(len({np.sign(D.recov(d, "mean_pearson_r") - D.recov(d, "mean_spearman_r")) for d in NONMAIZE}) > 1)], DIH, kind="bool")
     reg("摘要", "高斯设计网格: Δr* ≈ k/√N, f = 0.10 时 k ≈ 3", r"The Gaussian gap falls as about (\d)/√N",
         lambda: [cells_law(0.10)[2]], f"{X}/threshold_design.csv")
-    reg("摘要", "五份已核实提交都低于 i·r", r"fell short of i·r in (all five) verified submissions",
-        lambda: [bool((D.gap.gap < 0).all()) and D.gap.team.nunique() == 5], GAP, kind="bool")
     reg("表1注", "大豆分析所用环境数 (≥25 个基因型) 与基因型数",
         r"the soybean analyses use the (\d+) of its environments that carry at least (\d+) genotypes, with ([\d,]+) genotypes",
         lambda: [(lambda o: [int((o.groupby("Env").k.nunique() >= 25).sum()), 25,
@@ -625,20 +619,12 @@ def build_registry():
         lambda: [code_int(f"{GC}/invariance.py", r"rng\.uniform\(([\d.]+),"), code_int(f"{GC}/invariance.py", r"rng\.uniform\([\d.]+,([\d.]+),"),
                  code_int(f"{GC}/invariance.py", r"for rep in range\((\d+)\)")], f"{GC}/invariance.py",
         note_fn=lambda: "" if code_has(f"{GC}/invariance.py", "rng.normal(0,1.0,") and code_has(f"{GC}/invariance.py", "*sd") else "b_e 不再按环境 SD 缩放")
-    reg("§2.4", "通过者: 单调漂移为零", r"the drift is the floating-point residual of an identity — (zero under the monotone test)",
-        lambda: [float(D.mono[D.tier("I")].max()) == 0.0], MON + " Tier I", kind="bool")
-    reg("§2.4", "通过者: 仿射漂移上限", r"and at most " + N + " under the affine test; among",
-        lambda: [D.inv[D.tier("I") + D.tier("II")].max()], INV + " Tier I–II")
-    reg("§2.4", "序敏感但失败者的最小漂移 (仿射/单调)", r"among the order-sensitive metrics that fail, the smallest drift is " + N + " under the affine test and " + N + r" under the monotone test \(" + N + "–" + N + " across datasets in the panel tests\)",
-        lambda: [D.inv[[m for m in D.pmz.index if D.pmz.loc[m, "order_sensitive"] and D.pmz.loc[m, "tier"] == "III"]].min(),
-                 D.mono[[m for m in D.pmz.index if D.pmz.loc[m, "order_sensitive"] and D.pmz.loc[m, "tier"] != "I"]].min(),
-                 D.part.min_drift_tierIII_affine.min(), D.part.min_drift_tierIII_affine.max()], INV + "; " + MON + "; " + PM + "; " + PB)
     reg("§2.4", "面板上的检验重复数", r"base methods of each constructed panel \((\d+) replicates\)",
         lambda: [code_int(f"{CC}/partition.py", r"REPS = (\d+)")], f"{CC}/partition.py REPS")
     reg("§2.4", "并列阈值 10⁻⁹", r"\(\|Δ\| < (10⁻⁹)\) cannot reverse",
         lambda: [code_int(f"{CC}/scope.py", r"ACC_TIE = ([\de.-]+)") == 1e-9], f"{CC}/scope.py ACC_TIE", kind="bool")
-    reg("§2.4", "聚类bootstrap重复数与宽度倍数", r"in the panels \(([\d,]+) replicates\); these are " + N + "–" + N + " times wider than binomial intervals",
-        lambda: [code_int(f"{CC}/analyse_species.py", r"def reversal_ci\(T,rng,B=(\d+)"), D.rr1.width_ratio.min(), D.rr1.width_ratio.max()],
+    reg("§2.4", "聚类bootstrap重复数与宽度倍数", r"in the panels \(([\d,]+) replicates\)\.",
+        lambda: [code_int(f"{CC}/analyse_species.py", r"def reversal_ci\(T,rng,B=(\d+)")],
         f"{CC}/analyse_species.py reversal_ci; " + RR1)
     reg("§2.4", "指标对数/team bootstrap 重复数", r"For the (\d+) metric pairs in maize, each rate was tested .*?\(([\d,]+) replicates\)",
         lambda: [len(D.rt), code_int(f"{GC}/reversal_tests.py", r"B, H0 = (\d+),")], RT + "; reversal_tests.py B", flags=re.S)
@@ -715,10 +701,6 @@ def build_registry():
     reg("§3.2", "Tier-I 排名 vs 2022/2024 官方", r"differs from the 2022 official leaderboard by a median of (\d+) places \(maximum (\d+)\) but from the 2024 one by (\d+) \(maximum (\d+)\)",
         lambda: [(D.tierrank.official_2022 - D.tierrank.tier_I).abs().median(), (D.tierrank.official_2022 - D.tierrank.tier_I).abs().max(),
                  (D.tierrank.official_2024 - D.tierrank.tier_I).abs().median(), (D.tierrank.official_2024 - D.tierrank.tier_I).abs().max()], TIER)
-    reg("§3.2", "模型类别数/平均名次变化", r"with the (four) model classes labelled in the competition paper \(mean " + N + " to " + N + " places",
-        lambda: [D.mcp.model_class.nunique(), D.mcp.mean_move.min(), D.mcp.mean_move.max()], f"{G}/model_class_permutation.csv")
-    reg("§3.2", "模型类别置换P下界", r"places, permutation P > " + N + r"\)",
-        lambda: [D.mcp.perm_p.min()], f"{G}/model_class_permutation.csv perm_p", kind="gt")
     reg("§3.2", "面板反转率 (未增广/增广)", r"(\d+)–(\d+) % of base-method pairs reverse, and (\d+)–(\d+) % once the miscalibrated variants are added",
         lambda: [100 * min(D.unaug(d) for d in NONMAIZE), 100 * max(D.unaug(d) for d in NONMAIZE),
                  100 * D.summ.loc[NONMAIZE].reversal.min(), 100 * D.summ.loc[NONMAIZE].reversal.max()], SUM + "; " + RR1)
@@ -737,9 +719,8 @@ def build_registry():
     reg("§3.2", "三个面板: 观察跨度/区间宽度", r"In the three panels the observed range spans (\d+)–(\d+) % of the board and the interval (\d+)–(\d+) %",
         lambda: [100 * D.rc.loc[NONMAIZE].census_range_frac.min(), 100 * D.rc.loc[NONMAIZE].census_range_frac.max(),
                  100 * D.rc.loc[NONMAIZE].conformal_width_frac.min(), 100 * D.rc.loc[NONMAIZE].conformal_width_frac.max()], RC)
-    reg("§3.2", "去冗余后宽度/单类内宽度", r"leaves the maize width at (\d+) places; only restricting the panel to one class narrows it, to (\d+) places within the error-magnitude family and (\d+) for the two Tier I–II metrics",
-        lambda: [D.ris.loc["six distinct quantities, within environment", "median_width"], D.ris.loc["error-magnitude family only", "median_width"],
-                 D.ris.loc["Tier I and II metrics only", "median_width"]], f"{G}/rank_interval_sensitivity.csv")
+    reg("§3.2", "去冗余后宽度", r"Removing redundant metrics leaves the maize width at (\d+) places",
+        lambda: [D.ris.loc["six distinct quantities, within environment", "median_width"]], f"{G}/rank_interval_sensitivity.csv")
     reg("§3.2", "环境重抽区间占比", r"gives median intervals of (\d+)–(\d+) % of the board in the three panels",
         lambda: [100 * (D.rob.boot_width / D.rob.methods).min(), 100 * (D.rob.boot_width / D.rob.methods).max()], ROB + " boot_width/methods")
     reg("§3.2", "环境重抽宽度为指标宽度的五分之一到一半", r"(about a quarter to a half) of the width across metrics",
@@ -842,11 +823,6 @@ def build_registry():
         lambda: [bool((D.cop.gap_C1 < 0).all())], COP, kind="bool")
     reg("§3.4", "copula 残差 |t|", r"with residual \|t\| of " + N + "–" + N,
         lambda: [(D.cop.gap_C1 / D.cop.se_C1).abs().min(), (D.cop.gap_C1 / D.cop.se_C1).abs().max()], COP)
-    reg("§3.4", "正态与观测边缘之差", r"normal and observed margins differ by " + N + " SD",
-        lambda: [D.cop10.margin_effect.abs().mean()], COP + " (f=0.10,0.20)")
-    reg("§3.4", "Pearson 高估/低估秩一致性 (五份全列)", r"overstates the rank agreement in (four) of the five submissions — by " + N + " %, (\d+) %, (\d+) % and (\d+) % — and understates it by (\d+) % in the fifth",
-        lambda: [int((D.overstate > 0).sum())] + sorted(100 * v for v in D.overstate if v > 0) + [-100 * D.overstate.min()],
-        COP + " (bench_N − bench_C0)/bench_N 按队均值", tol=[None, 0.05, None, None, None, None])
     reg("§3.4", "每环境基因型数中位数", r"with a median of (\d+) genotypes per environment, replacing iₖ",
         lambda: [D.n_per_env_maize], "Final_Observed_Yield.csv × 五份提交")
     reg("§3.4", "有限群体校正: 只改第三位小数, 解释为零", r"changes the projection in the (third decimal and explains none) of the gap",
@@ -918,8 +894,42 @@ def build_registry():
     reg("§3.5", "冠军/第1–3差距占天花板", r"the winning team reached (\d+)–(\d+) % of that bound, and the first-to-third gap is " + N + "–" + N + " % of the ceiling",
         lambda: [100 * D.hh("n=2", "winner_frac_of_ceiling"), 100 * D.hh("n=1  single", "winner_frac_of_ceiling"),
                  100 * D.hh("n=2", "gap13_frac_of_ceiling"), 100 * D.hh("n=1  single", "gap13_frac_of_ceiling")], HB)
-    reg("§3.5", "i·r 下的相对增益", r"the first-to-second gap is worth " + N + " % of the winner's projected selection differential, the first-to-third " + N + " % and the transferred threshold (\d+)–(\d+) %",
-        lambda: [100 * D.gap12 / D.r_top[0], 100 * D.gap13 / D.r_top[0], 100 * D.tmz.transfer_lo / D.r_top[0], 100 * D.tmz.transfer_hi / D.r_top[0]], S1f + "; " + TT)
+
+    # ================= 2.5 / 3.7: GPverdict
+    GVJ, GVV = f"{X}/gpverdict_cubic.json", f"{X}/gpverdict_validation.csv"
+    _gv = lambda: json.load(open(GVJ))
+    _rk = lambda m: dict(_gv()["ranking"])[m]
+    reg("§2.5", "GPverdict: 指标数; 少于八个环境时改为环境内拆分基因型",
+        r"it reports the empirical tier of (eleven) metrics.*?splitting genotypes within environments when there are fewer than (eight) environments",
+        lambda: [(sys.path.insert(0, "tool") or len(__import__("gpverdict").METRICS)),
+                 code_int("tool/gpverdict/core.py", r"by_env = env_split = len\(envs\) >= (\d+)")], "tool/gpverdict/core.py", flags=re.S)
+    reg("§2.5", "GPverdict 精确复现春小麦结果 (反转率与三条规则的回收)", r"It (reproduces the spring-wheat results reported here exactly)",
+        lambda: [bool((pd.read_csv(GVV).abs_difference < 1e-9).all() and len(pd.read_csv(GVV)) == 4)], GVV, kind="bool")
+    reg("§3.7", "CUBIC 规模: 方法/品系/地点/每方法单元数",
+        r"Applied to (\d+) methods predicting ear weight in the CUBIC population \(([\d,]+) recombinant inbred lines at (five) sites; ([\d,]+) genotype–environment cells per method\)",
+        lambda: [_gv()["methods"], _gv()["genotypes"], _gv()["environments"], _gv()["cells"]], GVJ)
+    reg("§3.7", "CUBIC 自身预测上的分级与判据一致", r"GPverdict (recovers the same partition) from the population's own predictions",
+        lambda: [bool(_gv()["tier_I"] == ["hit_rate", "ndcg", "sel_diff", "spearman"] and _gv()["tier_II"] == ["pearson"] and len(_gv()["tier_III"]) == 6)], GVJ, kind="bool")
+    reg("§3.7", "CUBIC 领先者与并列者的秩相关、可分辨差距",
+        r"first by mean within-environment rank correlation \(" + N + r"\), with random forest \(" + N + r"\) and gradient boosting \(" + N + r"\) inside the smallest gap the trial resolves, " + N + ";",
+        lambda: [_rk("ens_ml"), _rk("rf"), _rk("gbm"), _gv()["gap"]], GVJ)
+    reg("§3.7", "CUBIC 并列集合恰为这三个方法, 且集成领先", r"(It ranks an ensemble of random forest, gradient boosting and a multilayer perceptron first)",
+        lambda: [bool(_gv()["leader"] == "ens_ml" and _gv()["tied"] == ["ens_ml", "rf", "gbm"])], GVJ, kind="bool")
+    reg("§3.7", "CUBIC 前两名之差与分辨所需单元数 (百万)",
+        r"the first two differ by " + N + r", a gap that would take about (\d+) million cells to resolve, and Pearson r puts random forest first",
+        lambda: [_gv()["margin"], _gv()["cells_to_resolve_margin"] / 1e6], GVJ)
+    reg("§3.7", "CUBIC 中 Pearson 的第一名是随机森林", r"(Pearson r puts random forest first)",
+        lambda: [bool(_gv()["pearson_leader"] == "rf")], GVJ, kind="bool")
+    reg("§3.7", "GBLUP×E 落后领先者的差距", r"The marker × environment GBLUP, " + N + r" behind the leader",
+        lambda: [_rk("ens_ml") - _rk("gblup_gxe")], GVJ)
+    reg("§3.7", "GBLUP×E 在可分辨差距之外", r"behind the leader, (lies outside that gap)",
+        lambda: [bool(_rk("ens_ml") - _rk("gblup_gxe") > _gv()["gap"])], GVJ, kind="bool")
+    reg("§3.7", "按品系拆分的结果检验: 三条规则回收范围与结果信度",
+        r"the method each rule picks recovers (\d+)–(\d+) % of the attainable selection gain \(outcome reliability " + N + r"\)",
+        lambda: [100 * min(_gv()["outcome"]["recovery"].values()), 100 * max(_gv()["outcome"]["recovery"].values()), _gv()["outcome"]["reliability"]], GVJ)
+    reg("摘要", "GPverdict 在 CUBIC: 方法数、并列数、前两名之差、所需单元数",
+        r"for (\d+) methods in a Chinese maize population it finds (three) that the trial cannot separate, the first two by " + N + r", a gap that would take about (\d+) million cells to resolve",
+        lambda: [_gv()["methods"], len(_gv()["tied"]), _gv()["margin"], _gv()["cells_to_resolve_margin"] / 1e6], GVJ)
 
     # ================= 3.6
     reg("§3.6", "反转率范围 (全部; 仅未增广)", r"reversal of (\d+)–(\d+) % of method pairs when the official metric changes, (\d+)–(\d+) % counting only unaugmented methods",
@@ -937,8 +947,6 @@ def build_registry():
     reg("§3.6", "阈值下限范围且高于第1–2名差距", r"a surrogate threshold whose lower confidence limit, " + N + "–" + N + ", exceeds the gap between the competition's first two places",
         lambda: [min(D.tpar(d, "ci_lo") for d in NONMAIZE), max(D.tpar(d, "ci_lo") for d in NONMAIZE)], TE,
         note_fn=lambda: "" if min(D.tpar(d, "ci_lo") for d in NONMAIZE) > D.gap12 else "下限不高于第1–2名差距!")
-    reg("§3.6", "CUBIC 反转率", r"gives the same partition and a reversal of (\d+) %",
-        lambda: [100 * D.china.reversal], f"{X}/china_summary.csv")
 
     # ================= 4
     reg("§4.1", "划分 22 → 1/1/20", r"partitions the (twenty-two) metrics a major competition reported into (one) that qualifies, (one) that calibration cannot move but order-preserving distortion can, and (twenty) that qualify under neither",

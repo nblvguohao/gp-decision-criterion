@@ -1,4 +1,4 @@
-# Code and derived data for: *A decision-based criterion for comparing genomic prediction methods across environments*
+# Code and derived data for: *A decision-based criterion and an open tool for choosing genomic prediction methods across environments*
 
 Guohao Lv, Lichuan Gu
 
@@ -29,6 +29,7 @@ figure in the manuscript from public data.
 | A published rank spans a median of 12 of 30 places across the official metrics | `analysis/crosscrop/code/rank_census.py`, `analysis/g2f_leaderboard/code/rank_intervals.py` | `rank_census.csv`, `rank_intervals.csv` → Fig. 4 |
 | The method panels include GBLUP and marker × environment GBLUP, fitted by REML on the same marker principal components as the ridge baselines | `analysis/crosscrop/code/mixed_models.py`, `panel_bean.py`, `panel_ursn.py`, `panel_nust.py`, `panel_china.py` | `*_panel_wide.csv` |
 | Without the two GBLUP models the correlation family still leads in soybean and spring wheat; leaving out one base method at a time changes the soybean result in no panel | `analysis/crosscrop/code/composition_sensitivity.py` | `composition_sensitivity.csv` → Table S22 |
+| GPverdict reproduces the spring-wheat results exactly and, for Chinese maize (CUBIC), finds three methods the trial cannot separate | `analysis/crosscrop/code/gpverdict_applications.py` (tool in `tool/`) | `gpverdict_validation.csv`, `gpverdict_cubic.json` → Section 3.7, Tables S23–S24 |
 | Which metric family selects better material follows the decision | `analysis/crosscrop/code/does_it_help.py`, `decision_swap.py` | `does_it_help.json`, `decision_swap.csv` → Tables S7, S14 |
 | For selection on genotype means across environments, the mean within-environment rank correlation shows no detectable difference from that decision's own admissible metric where the outcome is reliable (common bean, soybean) | `analysis/crosscrop/code/decision_genotype_means.py` | `decision_genotype_means.csv` → Table S21 |
 | Realised selection differentials fall 0.13–0.31 SD below i·r in the verified submissions | `analysis/crosscrop/code/breeder_gap_se.py`, `copula_bridge.py` | `breeder_gap_se.csv`, `breeder_gap_panels.csv` (panels also against the finite-population expectation, `gap_fin`), `copula_bridge.csv` |
@@ -90,6 +91,14 @@ analysis/
 data/raw/              primary data, by dataset
 tools/                 manuscript support: reference database and number check
 ```
+
+### GPverdict, the tool
+
+The criterion, the resolution threshold and the outcome test are released as GPverdict, a
+Python package with a command line and an in-browser web version: source and tests at
+https://github.com/nblvguohao/gpverdict (v1.0.0), web version at
+https://nblvguohao.github.io/gpverdict/. A copy of the package used for the paper is in
+`tool/`.
 
 ### The generic runner
 
