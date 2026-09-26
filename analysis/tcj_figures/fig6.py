@@ -1,10 +1,11 @@
 """Fig. 6: GPverdict, the criterion as a tool, and its verdict for Chinese maize (CUBIC).
 
-(a) what the tool asks and answers; (b) the CUBIC verdict: 17 methods ranked by the admissible
+(A) screenshots of the web page running its bundled example; (b) the CUBIC verdict: 17 methods ranked by the admissible
 metric, with the gap the trial resolves; (c) planning a trial: genotype-environment cells
-needed to resolve an accuracy gain, with the paper's datasets and the leaderboard's top gap.
+needed to resolve an accuracy gain inside the design grid (extrapolation shaded), with the
+paper's datasets and the leaderboard's top gap.
 Reads analysis/crosscrop/results/gpverdict_cubic.json and gpverdict_cells.csv (written by
-analysis/crosscrop/code/gpverdict_applications.py). No external artwork.
+analysis/crosscrop/code/gpverdict_applications.py) and the two screenshots in assets/.
 """
 import json, sys
 import numpy as np, pandas as pd
@@ -25,30 +26,27 @@ def label(m):
     d, lam = m.replace("ridge_pc", "").split("_")
     return f"Ridge, {d} PCs, λ = {'1' if lam == 'lo' else '100'}"
 
-W, H = 190, 104
+W, H = 190, 136
 fig = plt.figure(figsize=(W * MM, H * MM))
 
-# ---------------------------------------------------------------- (a) workflow
-ax = mm_axes(fig, 0, 70, 190, 32); ax.set_xlim(0, 190); ax.set_ylim(0, 32); ax.axis("off")
-ax.text(1, 30.5, "a", fontsize=9, fontweight="bold", va="top")
-def box(x, w, title, body, fc, ec):
-    ax.add_patch(FancyBboxPatch((x, 4), w, 23, boxstyle="round,pad=0,rounding_size=1.6", fc=fc, ec=ec, lw=.7))
-    ax.text(x + w / 2, 24.3, title, ha="center", va="top", fontsize=7.3, fontweight="bold")
-    ax.text(x + w / 2, 18.6, body, ha="center", va="top", fontsize=7, linespacing=1.25)
-box(3, 27, "Input", "cross-validated\npredictions by\nenvironment,\ngenotype, method", "#f2f2f2", RULE)
-Q = [("1  Metric check", "which metrics can\nrank methods for\nthe decision"),
-     ("2  Ranking", "leader and rank\nintervals; methods\nwithin k/√N are tied"),
-     ("3  RMSE check", "what RMSE would\npick; out-of-sample\ngain of each rule"),
-     ("4  Trial size", "cells needed to\nresolve a given\naccuracy gain")]
-x0, w, gp = 37, 27.5, 2.0
-for i, (tt, b) in enumerate(Q):
-    box(x0 + i * (w + gp), w, tt, b, "#fbeaea" if i == 0 else "#eef3f9", C_ADM if i == 0 else C_BLUE)
-xv = x0 + 4 * (w + gp) - gp + 6.5
-box(xv, 187 - xv, "Verdict", "which method to use,\nwhich are tied,\nwhat a larger trial\nwould resolve", "#e9f4ec", C_GREEN)
-for xa, xb in ((30.4, x0 - 0.6), (x0 + 4 * (w + gp) - gp + 0.4, xv - 0.6)):
-    ax.annotate("", xy=(xb, 15.5), xytext=(xa, 15.5), arrowprops=dict(arrowstyle="-|>", lw=.8, color=INK))
-ax.text(95, 0.6, "GPverdict runs in a web browser, with the data staying on the user's computer, or as a Python package",
-        ha="center", va="bottom", fontsize=7, color=MUTED, style="italic")
+# ---------------------------------------------------------------- (a) the web page, as it runs
+# screenshots of the published page running its bundled example (assets/capture_web.py)
+from PIL import Image
+IMG_IN = Image.open("analysis/tcj_figures/assets/gpverdict_web_input.png").convert("RGB")
+IMG_REP = Image.open("analysis/tcj_figures/assets/gpverdict_web_report.png").convert("RGB")
+IMG_REP = IMG_REP.crop((0, 0, IMG_REP.width, 1200))          # the report down to the end of its verdict
+HA = 58                                                       # image height, mm
+wi = HA * IMG_IN.width / IMG_IN.height; wr = HA * IMG_REP.width / IMG_REP.height
+xi = 3; xr = W - 3 - wr
+for x0, img, cap in ((xi, IMG_IN, "Input: the page loads Python in the browser; data are not uploaded"),
+                     (xr, IMG_REP, "Report for the bundled spring wheat example (verdict section)")):
+    ax = mm_axes(fig, x0, 70, img.width * HA / img.height, HA)
+    ax.imshow(np.asarray(img), interpolation="lanczos"); ax.set_xticks([]); ax.set_yticks([])
+    for sp in ax.spines.values(): sp.set_visible(True); sp.set_color(RULE); sp.set_linewidth(.6)
+    mm_text(fig, x0, 70 + HA + 1.2, cap, fontsize=7, color=MUTED, va="bottom", ha="left")
+mm_text(fig, 1, H - 1, "A", fontsize=9, fontweight="bold", va="top")
+ax = mm_axes(fig, xi + wi, 70, xr - xi - wi, HA); ax.axis("off"); ax.set_xlim(0, 1); ax.set_ylim(0, 1)
+ax.annotate("", xy=(.92, .5), xytext=(.08, .5), arrowprops=dict(arrowstyle="-|>", lw=.9, color=INK))
 
 # ---------------------------------------------------------------- (b) CUBIC verdict
 ax = mm_axes(fig, 44, 7, 62, 58)
@@ -69,33 +67,38 @@ ax.set_xlabel("mean within-environment rank correlation")
 ax.text(lead + 0.006, len(vals) - 4.6, f"gap the trial\nresolves:\n{gap:.3f}", ha="left", va="top", fontsize=7, color=C_ADM)
 ax.text(0.348, 3.0, "CUBIC ear weight,\n17 methods, 5 sites\n\nrank and Pearson\ncorrelations mark\nthe same three",
         fontsize=7, va="center", ha="left", color=INK)
-ax.text(-0.72, 1.035, "b", transform=ax.transAxes, fontsize=9, fontweight="bold", va="bottom")
+ax.text(-0.72, 1.035, "B", transform=ax.transAxes, fontsize=9, fontweight="bold", va="bottom")
 
 # ---------------------------------------------------------------- (c) planning a trial
 ax = mm_axes(fig, 133, 7, 55, 58)
 g = np.logspace(np.log10(0.002), np.log10(0.2), 200)
+GRID_MIN, GRID_MAX = 25 * 10, 400 * 200                       # cells spanned by the design grid (Table S11)
+ax.axhspan(GRID_MAX, 6e7, color="#f1f1f1", lw=0, zorder=0)
+ax.text(0.0023, 3.2e7, "beyond the design grid: extrapolated", fontsize=7, color=MUTED, ha="left", va="center")
 for f, ls in ((0.05, ":"), (0.10, "-"), (0.20, "--")):
-    ax.plot(g, gv.cells_needed(g, f), color=INK, lw=1.0 if f == 0.10 else .8, ls=ls, label=f"top {f:.0%}")
+    n = gv.cells_needed(g, f); inside = (n >= GRID_MIN) & (n <= GRID_MAX)
+    ax.plot(np.where(inside, g, np.nan), n, color=INK, lw=1.0 if f == 0.10 else .8, ls=ls, label=f"top {f:.0%}")
+    ax.plot(np.where(n >= GRID_MAX, g, np.nan), n, color=C_INADM, lw=.8, ls=ls)
+    ax.plot(np.where(n <= GRID_MIN, g, np.nan), n, color=C_INADM, lw=.8, ls=ls)
 cols = {"maize (G2F 2022 test set)": SPECIES["maize"], "common bean": SPECIES["bean"], "spring wheat": SPECIES["spring wheat"], "soybean": SPECIES["soybean"]}
 for _, r in CELLS.iterrows():
     ax.scatter([r.resolvable_gap], [r.cells], s=18, color=cols[r.dataset], zorder=3, lw=0)
 ax.scatter([J["gap"]], [J["cells"]], s=18, color=C_GREEN, zorder=3, lw=0)
-lab = {"maize (G2F 2022 test set)": "G2F test set", "common bean": "common bean", "spring wheat": "spring wheat", "soybean": "soybean"}
+lab = {"maize (G2F 2022 test set)": "G2F maize", "common bean": "common bean", "spring wheat": "spring wheat", "soybean": "soybean"}
 from matplotlib.lines import Line2D
 hs = [Line2D([], [], ls="", marker="o", ms=4, color=cols[r.dataset], label=lab[r.dataset]) for _, r in CELLS.sort_values("cells", ascending=False).iterrows()]
 hs.insert(2, Line2D([], [], ls="", marker="o", ms=4, color=C_GREEN, label="CUBIC"))
-top12 = 0.003; n12 = gv.cells_needed(top12, 0.10)
-ax.scatter([top12], [n12], s=20, marker="D", color=C_ADM, zorder=3, lw=0)
-ax.annotate("G2F 1st vs 2nd team,\n0.003 apart:\n≈1 million cells", xy=(top12, n12), xytext=(0.0052, 2.6e6), fontsize=7, color=C_ADM,
-            va="bottom", ha="left", arrowprops=dict(arrowstyle="-", lw=.6, color=C_ADM, shrinkA=0, shrinkB=3))
+top12 = 0.003
+ax.axvline(top12, color=C_ADM, lw=.8, ls=(0, (1.2, 1.4)), zorder=1)
+ax.text(top12 * 1.1, 2.2e4, "G2F 1st vs 2nd\nteam: 0.003", fontsize=7, color=C_ADM, ha="left", va="center")
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(0.002, 0.2); ax.set_ylim(80, 6e7)
 ax.set_xticks([0.003, 0.01, 0.03, 0.1]); ax.set_xticklabels(["0.003", "0.01", "0.03", "0.1"])
 ax.set_xlabel("accuracy gain to resolve (Δr)"); ax.set_ylabel("genotype–environment cells needed")
 leg = ax.legend(loc="lower left", fontsize=7, handlelength=2.2, title="selection", title_fontsize=7)
 ax.add_artist(leg)
-ax.legend(handles=hs, loc="upper right", fontsize=7, handletextpad=0.2, borderaxespad=0.2, title="resolvable at\neach design", title_fontsize=7)
-ax.text(-0.30, 1.035, "c", transform=ax.transAxes, fontsize=9, fontweight="bold", va="bottom")
+ax.legend(handles=hs, loc="upper right", bbox_to_anchor=(1.0, 0.9), fontsize=7, handletextpad=0.2, borderaxespad=0.2, title="Gaussian lower bound\nat each design", title_fontsize=7)
+ax.text(-0.30, 1.035, "C", transform=ax.transAxes, fontsize=9, fontweight="bold", va="bottom")
 
 save(fig, "Fig6", DOUBLE, tight=False)
 print("wrote analysis/tcj_figures/Fig6.pdf/.png")

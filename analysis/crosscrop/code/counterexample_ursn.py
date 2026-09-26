@@ -1,4 +1,4 @@
-"""Spring-wheat counterexample for Fig. 1d: mean_r2_pearson cannot tell a ranking from its
+"""Spring-wheat counterexample for Fig. 1D: mean_r2_pearson cannot tell a ranking from its
 reverse. Every base method is scored as fitted and with its predictions reversed within each
 environment; squaring the correlation gives the two the same score although one selects
 above the environment mean and the other below it.

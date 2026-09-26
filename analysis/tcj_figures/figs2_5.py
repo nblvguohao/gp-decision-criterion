@@ -52,7 +52,7 @@ SUM=pd.read_csv("analysis/crosscrop/results/cross_dataset_summary.csv").set_inde
 mz=SUM.loc["maize"]
 TOP=pd.read_csv(f"{R}/top10_reversal.csv").iloc[0]
 rows=[("all 30 teams",mz.reversal,mz.ci_lo,mz.ci_hi,C_BLUE),
-      ("top 10 teams",TOP.rate,TOP.ci_lo,TOP.ci_hi,C_ADM)]
+      ("top 10 teams\n(2022 board)",TOP.rate,TOP.ci_lo,TOP.ci_hi,C_ADM)]
 for i,(l,v,lo,hi,c) in enumerate(rows):
     ax.errorbar(v,i,xerr=[[v-lo],[hi-v]],fmt="o",color=c,ms=5,capsize=3,lw=1.3,zorder=3)
     ax.text(v,i+.24,f"{v*100:.0f}%",ha="center",fontsize=7,color=c,fontweight="bold")
@@ -61,7 +61,7 @@ ax.text(.49,1.62,"unrelated\nrankings",fontsize=FS,ha="right",color=MUTED)
 ax.axvline(0,color=C_GREEN,ls=":",lw=.85)
 ax.text(.01,1.62,"perfect\nagreement",fontsize=FS,ha="left",color=C_GREEN)
 ax.set_yticks([0,1]); ax.set_yticklabels([r[0] for r in rows]); ax.set_ylim(-.6,1.95)
-ax.set_xlim(-.05,.60); ax.set_xlabel("fraction of team pairs\nreordered")
+ax.set_xlim(-.05,.66); ax.set_xticks([0,.2,.4,.6]); ax.set_xlabel("fraction of team pairs\nreordered")
 panel(ax,"b",dx=-0.40,dy=1.02)
 print("Fig2 width mm", round(save(fig,"Fig2",ONEHALF),1)); plt.close(fig)
 
@@ -107,6 +107,7 @@ _RR=pd.read_csv("analysis/crosscrop/results/unaugmented_panels.csv")
 _RR=_RR[_RR.panel=="base"].set_index("dataset")          # panels without the added variants
 _MZ=_TT.loc["maize (G2F design)"]
 FLOOR=float(_MZ.theory_lam05); TR_LO,TR_HI=float(_MZ.transfer_lo),float(_MZ.transfer_hi)   # design value, not a bound
+DISP={"bean":"common bean"}      # display name; "bean" stays the colour key
 _LAB={"maize":"maize","common bean":"bean","spring wheat":"spring wheat","soybean":"soybean"}
 D=pd.DataFrame([
   (_LAB[k], k, int(r.methods), int(r.envs), int(r.genos_per_env), r.reversal, r.ci_lo, r.ci_hi, r.width_frac,
@@ -117,7 +118,7 @@ fig=plt.figure(figsize=(DOUBLE,DOUBLE*0.44))
 gs=fig.add_gridspec(2,3,hspace=.95,wspace=.55)
 y=np.arange(len(D)); YL=(len(D)-.35,-.65)
 def _rows(ax):
-    ax.set_yticks(y); ax.set_yticklabels(D.sp,fontsize=FS); ax.set_ylim(*YL)
+    ax.set_yticks(y); ax.set_yticklabels([DISP.get(x,x) for x in D.sp],fontsize=FS); ax.set_ylim(*YL)
     for t,c in zip(ax.get_yticklabels(),[SPECIES[x] for x in D.sp]): t.set_color(c)
 ax=fig.add_subplot(gs[0,0])
 for i,r in D.iterrows():
@@ -140,7 +141,7 @@ for i,r in D.iterrows():
             bbox=dict(fc="white",ec="none",pad=.2),zorder=5)
 ax.axvline(.5,color=INK,ls=(0,(3.5,2)),lw=.85); ax.axvline(0,color=C_GREEN,ls=":",lw=.85)
 _rows(ax); ax.set_xlim(-.04,.80)
-ax.legend(handles=[Line2D([],[],marker="o",ls="",color=MUTED,ms=4.6,label="with the added variants"),
+ax.legend(handles=[Line2D([],[],marker="o",ls="",color=MUTED,ms=4.6,label="panel as analysed"),
                    Line2D([],[],marker="o",ls="",color=MUTED,mfc="white",ms=3.6,label="base methods only")],
           loc="upper right",bbox_to_anchor=(1.02,1.08),handletextpad=.3)
 ax.set_xlabel("method pairs reordered when the official metric changes")
@@ -221,7 +222,7 @@ for k,(ds,sp) in enumerate(_P.items()):
         if len(b)<8: continue
         p=(b.dg>0).mean(); xs.append(b.dr.mean()); ps.append(p); es.append(np.sqrt(p*(1-p)/len(b)))
     ax.errorbar(np.array(xs)+(k-1)*.002,ps,yerr=es,fmt="o",color=c,ms=3.0,lw=.9,capsize=1.6,zorder=3)
-    cv=TC[TC.dataset==ds]; ax.plot(cv.dr,cv.p_observed,color=c,lw=1.1,zorder=2,label=sp)
+    cv=TC[TC.dataset==ds]; ax.plot(cv.dr,cv.p_observed,color=c,lw=1.1,zorder=2,label=DISP.get(sp,sp))
 cv=TC[TC.dataset=="maize (G2F design)"]
 ax.plot(cv.dr,cv.p_gaussian,ls=(0,(2.2,1.6)),color=INK,lw=1.15,zorder=2,label="Gaussian model,\nG2F design")
 ax.axhline(.95,color=INK,ls=(0,(3.5,2)),lw=.7); ax.axhline(.5,color=MUTED,ls=":",lw=.85)

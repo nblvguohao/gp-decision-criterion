@@ -4,7 +4,7 @@ The table used to be maintained by hand, so it drifted out of step with the
 analysis. Run from the repository root:
     python analysis/crosscrop/code/build_tableS2.py
 
-Maize drifts are those plotted in Fig. 1a (invariance.py, monotone_test_panels.py); the
+Maize drifts are those plotted in Fig. 1A (invariance.py, monotone_test_panels.py); the
 reversal change, the tier and the soybean drift come from partition.py.
 """
 import numpy as np, pandas as pd

@@ -122,7 +122,7 @@ ax.text(170,48.5,"A metric can represent\nthe decision only if it is",ha="center
 ax.text(155,37.5,"unchanged under A",ha="left",va="center",fontsize=FS,color=C_BLUE,fontweight="bold")
 ax.text(155,32.0,"and",ha="left",va="center",fontsize=FS)
 ax.text(155,26.5,"changed under B",ha="left",va="center",fontsize=FS,color=C_ADM,fontweight="bold")
-ax.text(170,18.5,"(tested in b and c)",ha="center",va="center",fontsize=FS,color=MUTED)
+ax.text(170,18.5,"(tested in B and C)",ha="center",va="center",fontsize=FS,color=MUTED)
 
 
 # ------------------------------------------------------------------ (b) the 22 official metrics
@@ -179,8 +179,8 @@ ax.text(0,w.mean_r2_pearson+.012,(f"{w.method} and its reverse: same $r^{{2}}$ (
 ax.text(.30,.035,"as fitted:\nselect better\nthan average",color=C_BLUE,fontsize=FS,ha="left",va="center")
 ax.text(-.30,.035,"reversed:\nselect worse\nthan average",color=MUTED,fontsize=FS,ha="right",va="center")
 ax.axvline(0,color=INK,lw=.6,ls=":",zorder=0)
-ax.set_xlabel("within-environment Pearson $r$",labelpad=1)
-ax.set_ylabel("within-environment $r^{2}$",labelpad=1)
+ax.set_xlabel("mean within-environment Pearson $r$",labelpad=1)
+ax.set_ylabel("mean within-environment $r^{2}$",labelpad=1)
 ax.set_xlim(-.55,.55); ax.set_ylim(0,max(.27,w.mean_r2_pearson*1.35))
 # shared keys under panel b: the two tests, then the tiers
 fig.legend(handles=[Line2D([],[],marker="o",ls="",color=MUTED,ms=4.4,mec="white",label="affine rescaling"),
@@ -190,6 +190,6 @@ fig.legend(handles=[Line2D([],[],marker="o",ls="",color=MUTED,ms=4.4,mec="white"
                     Line2D([],[],marker="s",ls="",color=C_INADM,ms=5,label="Tier III  inadmissible"),
                     Line2D([],[],ls="",label="$^{\\dagger}$ scores a ranking and its reverse alike")],
            loc="lower center",bbox_to_anchor=(.5,0.0),ncol=3,handletextpad=.35,columnspacing=1.6)
-for L,x,y in [("a",1,H-1),("b",1,H-SA-3),("c",108,H-SA-3),("d",108,H-SA-9-27-17)]:
+for L,x,y in [("A",1,H-1),("B",1,H-SA-3),("C",108,H-SA-3),("D",108,H-SA-9-27-17)]:
     mm_text(fig,x,y,L,fontsize=9,fontweight="bold",va="top",ha="left")
 print("Fig1 width mm", round(save(fig,"Fig1",DOUBLE,tight=False),1))

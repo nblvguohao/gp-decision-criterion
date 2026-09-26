@@ -43,7 +43,7 @@ if __name__ == "__main__":
     print(f"{'maize':14s} methods={M:3d} envs={23:4d} reversal={pt:.3f} "
           f"[{lo:.3f},{hi:.3f}] width={w:.0f}/{M}")
 
-    # the top-ten subset, with a clustered interval of its own so that Fig. 2b
+    # the top-ten subset, with a clustered interval of its own so that Fig. 2B
     # plots two intervals of the same kind rather than mixing Wilson with bootstrap
     top10 = T.assign(_o=orient(T, "mean_RMSE")).sort_values("_o", ascending=False).head(10)[METRICS]
     tp, tlo, thi, tn = reversal_ci(top10, np.random.default_rng(0))

@@ -37,7 +37,7 @@ def apply():
         "axes.grid":False,"lines.linewidth":1.1,
     })
 def panel(ax,letter,title=None,dx=-0.13,dy=1.06):
-    ax.text(dx,dy,letter,transform=ax.transAxes,fontsize=9,fontweight="bold",
+    ax.text(dx,dy,letter.upper(),transform=ax.transAxes,fontsize=9,fontweight="bold",
             va="bottom",ha="left")
     if title: ax.set_title(title,loc="left",pad=6)
 

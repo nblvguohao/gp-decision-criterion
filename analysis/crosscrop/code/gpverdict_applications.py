@@ -9,7 +9,7 @@ GPverdict itself lives in tool/gpverdict (public at github.com/nblvguohao/gpverd
 Writes analysis/crosscrop/results/gpverdict_validation.csv
        analysis/crosscrop/results/gpverdict_cubic.json
        analysis/crosscrop/results/gpverdict_cubic_methods.csv
-       analysis/crosscrop/results/gpverdict_cells.csv (Fig. 6c)
+       analysis/crosscrop/results/gpverdict_cells.csv (Fig. 6C)
 """
 import json, os, sys
 sys.path.insert(0, "tool")
@@ -34,7 +34,7 @@ V.to_csv(f"{RES}/gpverdict_validation.csv", index=False)
 print(V.to_string(index=False))
 assert (V.abs_difference < 1e-9).all(), "GPverdict no longer reproduces the paper"
 
-# ---- design points for Fig. 6c: genotype-environment cells per method in each dataset (paper rules)
+# ---- design points for Fig. 6C: genotype-environment cells per method in each dataset (paper rules)
 G = "analysis/g2f_leaderboard/results"
 obs = pd.read_csv(f"{G}/Final_Observed_Yield.csv").rename(columns={"Yield_Mg_ha": "y", "Hybrid": "k"})
 mz = []

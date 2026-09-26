@@ -894,7 +894,7 @@ def build_registry():
     reg("§3.7", "CUBIC 自身预测上的分级与判据一致", r"GPverdict (recovers the same partition) from the population's own predictions",
         lambda: [bool(_gv()["tier_I"] == ["hit_rate", "ndcg", "sel_diff", "spearman"] and _gv()["tier_II"] == ["pearson"] and len(_gv()["tier_III"]) == 6)], GVJ, kind="bool")
     reg("§3.7", "CUBIC 领先者与并列者的秩相关、可分辨差距",
-        r"first by mean within-environment rank correlation \(" + N + r"\), with random forest \(" + N + r"\) and gradient boosting \(" + N + r"\) inside the smallest gap the trial resolves, " + N + r" \(Fig\. 6b\);",
+        r"first by mean within-environment rank correlation \(" + N + r"\), with random forest \(" + N + r"\) and gradient boosting \(" + N + r"\) inside the smallest gap the trial resolves, " + N + r" \(Fig\. 6B\);",
         lambda: [_rk("ens_ml"), _rk("rf"), _rk("gbm"), _gv()["gap"]], GVJ)
     reg("§3.7", "CUBIC 并列集合恰为这三个方法, 且集成领先", r"(It ranks an ensemble of random forest, gradient boosting and a multilayer perceptron first)",
         lambda: [bool(_gv()["leader"] == "ens_ml" and _gv()["tied"] == ["ens_ml", "rf", "gbm"])], GVJ, kind="bool")
@@ -957,6 +957,8 @@ def build_registry():
         lambda: [float(D.dmi[(D.dmi.metric == "RMSE") & D.dmi.dataset.str.startswith("maize")][c].iloc[0]) for c in ("affine", "monotone")], f"{G}/decision_metrics_invariance.csv")
     reg("图2注", "变动≥10名的队伍数", r"the (eight) teams moving (ten) or more places are drawn in colour",
         lambda: [int(((D.S1.mean_RMSE.rank(method="min") - D.S1.mean_pearson_r.rank(ascending=False, method="min")).abs() >= 10).sum()), 10], S1f + " (Fig. 2a 的 rank 规则)")
+    reg("§3.2", "2022 前十名中反转的队伍对", r"and (\d+) of the (\d+) pairs among the 2022 top ten",
+        lambda: [round(float(pd.read_csv(f"{G}/top10_reversal.csv").rate.iloc[0]) * 45), 45], f"{G}/top10_reversal.csv")
     reg("图2注", "队伍对数/前十名对数", r"for all (\d+) team pairs and for the (\d+) pairs among the top ten",
         lambda: [len(D.S1) * (len(D.S1) - 1) / 2, 45], S1f)
     reg("图3注", "玉米高斯值与迁移范围", r"the Gaussian value at the competition's design \(diamond, " + N + r"\) and the range after scaling by the panels' observed-to-Gaussian ratios \(" + N + "–" + N,

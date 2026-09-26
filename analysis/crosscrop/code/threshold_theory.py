@@ -19,7 +19,7 @@ winner with probability 0.95).
 
 Writes analysis/crosscrop/results/threshold_theory.csv       (matched configurations)
        analysis/crosscrop/results/threshold_design.csv       (the design grid)
-       analysis/crosscrop/results/threshold_theory_curve.csv (Fig. 5a)
+       analysis/crosscrop/results/threshold_theory_curve.csv (Fig. 5A)
 """
 import sys as _sys; _sys.path.insert(0, "analysis/crosscrop/code"); import scope  # datasets used in the paper
 import warnings, sys, numpy as np, pandas as pd
@@ -139,7 +139,7 @@ for f, s in G.groupby("f"):
 print(f"wrote {RES}/threshold_theory.csv and {RES}/threshold_design.csv")
 
 # ---------------------------------------------------------------- part 3
-# Fig. 5a: fitted agreement curves on a common grid of dr, observed (parent methods,
+# Fig. 5A: fitted agreement curves on a common grid of dr, observed (parent methods,
 # logistic through one-half) and the matched Gaussian model (lambda = 0.5, whose slope is
 # logit(0.95) / threshold), for every configuration; maize has the Gaussian curve only.
 grid_dr = np.linspace(0, 0.30, 61); C = []

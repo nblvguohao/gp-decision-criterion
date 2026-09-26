@@ -8,7 +8,8 @@ from scipy.cluster.hierarchy import linkage, leaves_list
 from scipy.spatial.distance import squareform
 R="analysis/g2f_leaderboard/results"
 KEY="within-env x discrimination"
-COL={KEY:C_ADM,"pooled x discrimination":"#92c5de",
+C_WD="#01665E"   # within-env discrimination: teal, so that red keeps its main-text meaning (Tier I)
+COL={KEY:C_WD,"pooled x discrimination":"#80CDC1",
      "within-env x error-magnitude":C_BLUE,"pooled x error-magnitude":"#b9c0c7"}
 
 # ---------------- Fig S1 : leave-one-metric-out coverage
@@ -17,20 +18,19 @@ fig,ax=plt.subplots(figsize=(ONEHALF,ONEHALF*0.62))
 cols=[COL[c] for c in C.cell]
 ax.barh(range(len(C)),C.coverage,color=cols,height=.72)
 lo=C[C.cell==KEY].coverage.max(); hi=C[C.cell!=KEY].coverage.min()
-ax.axvspan(lo,hi,color=C_ADM,alpha=.07,zorder=0)
-ax.text((lo+hi)/2,len(C)/2,"no metric\nlands here",fontsize=6,ha="center",va="center",
-        color=C_ADM,style="italic",rotation=90)
+ax.axvspan(lo,hi,color=C_WD,alpha=.08,zorder=0)
+ax.text((lo+hi)/2,(C.cell==KEY).sum()/2-.5,"no metric\nlands here",fontsize=6,ha="center",va="center",zorder=4,
+        color=C_WD,style="italic",rotation=90)
 ax.axvline(.95,color=INK,ls=(0,(3.5,2)),lw=.85)
 ax.set_yticks(range(len(C))); ax.set_yticklabels(C.metric,fontsize=5.8)
 for t,c in zip(ax.get_yticklabels(),cols): t.set_color(c if c!="#b9c0c7" else MUTED)
 ax.set_xlim(0,1.03); ax.set_ylim(-.8,len(C)-.3)
 ax.set_xlabel("leave-one-metric-out coverage of the 95% rank interval")
 i24=int(C.index[C.metric=="mean_pearson_r"][0])
-ax.annotate("adopted as the official\nranking metric in 2024",xy=(C.loc[i24,"coverage"],i24),
-            xytext=(.24,i24+4.2),fontsize=6,color=C_ADM,fontweight="bold",
-            arrowprops=dict(arrowstyle="->",color=C_ADM,lw=1))
+ax.text(.015,i24,"official ranking metric of the 2024 edition",fontsize=6,color="white",fontweight="bold",
+        va="center",ha="left")
 ax.legend(handles=[Line2D([],[],marker="s",ls="",color=COL[k],ms=5,
-          label=f"{k}  (n={int((C.cell==k).sum())})") for k in
+          label=f"{k.replace(' x ',' × ')}  (n={int((C.cell==k).sum())})") for k in
           (KEY,"pooled x discrimination","within-env x error-magnitude","pooled x error-magnitude")],
           fontsize=5.8,loc="upper center",bbox_to_anchor=(.5,-.155),ncol=2)
 fig.savefig("analysis/tcj_figures/FigS1.png"); fig.savefig("analysis/tcj_figures/FigS1.pdf"); plt.close(fig)
@@ -52,7 +52,7 @@ for a,t in cells:
     if key: ax.text(x,y-.28,"what selection\nactually needs",ha="center",fontsize=5.8,
                     color="white",style="italic")
 ax.set_xticks([0,1]); ax.set_xticklabels(["error magnitude\n(RMSE, MAE, $R^2_{score}$)",
-                                          "discrimination\n($r$, $\\rho$, slope)"],fontsize=6.4)
+                                          "discrimination\n($r$, $r^2$, $\\rho$, slope)"],fontsize=6.4)
 ax.set_yticks([0,1]); ax.set_yticklabels(["pooled across\nenvironments","within\nenvironment"],fontsize=6.4)
 ax.set_xlim(-.62,1.62); ax.set_ylim(-.62,1.62); ax.tick_params(length=0)
 for sp in ax.spines.values(): sp.set_visible(False)
@@ -81,7 +81,7 @@ WITHIN={"mean_pearson_r","mean_spearman_r","mean_lineRegressSlope","mean_r2_pear
 fig,ax=plt.subplots(figsize=(ONEHALF,ONEHALF*0.92))
 im=ax.imshow(X[np.ix_(order,order)],cmap="RdYlBu_r",vmin=0,vmax=.4)
 ax.set_xticks(range(len(lab))); ax.set_yticks(range(len(lab)))
-cc=[C_ADM if l in WITHIN else MUTED for l in lab]
+cc=[C_WD if l in WITHIN else MUTED for l in lab]
 ax.set_xticklabels(lab,rotation=90,fontsize=5.2); ax.set_yticklabels(lab,fontsize=5.2)
 for t,c in zip(ax.get_xticklabels(),cc): t.set_color(c)
 for t,c in zip(ax.get_yticklabels(),cc): t.set_color(c)

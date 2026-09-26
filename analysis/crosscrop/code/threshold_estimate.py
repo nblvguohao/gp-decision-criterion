@@ -9,7 +9,7 @@ pairs), too few to estimate; its threshold is transferred from the design floor 
 threshold_theory.py.
 
 Writes analysis/crosscrop/results/threshold_estimates.csv
-       analysis/crosscrop/results/threshold_pairs.csv (the primary pairs, for Fig. 5a)
+       analysis/crosscrop/results/threshold_pairs.csv (the primary pairs, for Fig. 5A)
 """
 import sys, warnings, numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
