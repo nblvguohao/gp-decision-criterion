@@ -1,0 +1,23 @@
+metric,coverage,cell
+lineRegressSlope,0.7878787878787878,pooled x discrimination
+spearman_r,0.8333333333333334,pooled x discrimination
+mean_r2_pearson,0.8484848484848485,within-env x discrimination
+r2_pearson,0.8484848484848485,pooled x discrimination
+pearson_r,0.8484848484848485,pooled x discrimination
+mean_spearman_r,0.8636363636363636,within-env x discrimination
+mean_pearson_r,0.8787878787878788,within-env x discrimination
+mean_lineRegressSlope,0.8939393939393939,within-env x discrimination
+realative_MAE,1.0,pooled x error-magnitude
+normalized_MAE,1.0,pooled x error-magnitude
+relative_RMSE,1.0,pooled x error-magnitude
+mean_RMSE,1.0,within-env x error-magnitude
+mean_MAE,1.0,within-env x error-magnitude
+mean_normalized_RMSE,1.0,within-env x error-magnitude
+mean_relative_RMSE,1.0,within-env x error-magnitude
+mean_normalized_MAE,1.0,within-env x error-magnitude
+mean_realative_MAE,1.0,within-env x error-magnitude
+mean_r2_score,1.0,within-env x error-magnitude
+normalized_RMSE,1.0,pooled x error-magnitude
+MAE,1.0,pooled x error-magnitude
+r2_score,1.0,pooled x error-magnitude
+RMSE,1.0,pooled x error-magnitude

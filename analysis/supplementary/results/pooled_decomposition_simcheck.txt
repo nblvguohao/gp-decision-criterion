@@ -1,0 +1,5 @@
+cases with a > 0 and k > 0: 388 of 500
+max |r_numeric - r_formula|: 2.00e-15
+max relative error of u* beyond one grid step: 0.00e+00
+max |max r_numeric - r_max|: 2.46e-08
+max |argmin MSE - k| beyond one grid step: 0.00e+00

@@ -1,0 +1,18 @@
+{
+  "2_Training_Meta_Data_2014_2021.csv": {
+    "sha256": "0b8ed470f5a8df9a4dcd9744a3d688974d2421e0b92ec3376dc2dfd756cadc14",
+    "bytes": 80005
+  },
+  "3_Training_Soil_Data_2015_2021.csv": {
+    "sha256": "21429e3c5867a879fb9e3814c24aa78ef93504cb1c193b0d3e0d8a900b5ddafa",
+    "bytes": 23184
+  },
+  "4_Training_Weather_Data_2014_2021.csv": {
+    "sha256": "ed53f534cf813fd821e82e1b791256ef41d350624a16155cc0c3c67154e404f2",
+    "bytes": 8326135
+  },
+  "6_Training_EC_Data_2014_2021.csv": {
+    "sha256": "1c2d0b9a518ba2183acaa50915e4a3a378f2e2344be582a67ee457113ef7faa2",
+    "bytes": 1646754
+  }
+}

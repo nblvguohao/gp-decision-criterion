@@ -1,0 +1,23 @@
+metric,aggregation,type,coverage,cell
+pearson_r,pooled,discrimination,0.9666666666666667,pooled x discrimination
+spearman_r,pooled,discrimination,1.0,pooled x discrimination
+lineRegressSlope,pooled,discrimination,0.9333333333333333,pooled x discrimination
+r2_score,pooled,error-magnitude,1.0,pooled x error-magnitude
+r2_pearson,pooled,discrimination,0.9666666666666667,pooled x discrimination
+MAE,pooled,error-magnitude,1.0,pooled x error-magnitude
+realative_MAE,pooled,error-magnitude,1.0,pooled x error-magnitude
+normalized_MAE,pooled,error-magnitude,1.0,pooled x error-magnitude
+RMSE,pooled,error-magnitude,1.0,pooled x error-magnitude
+relative_RMSE,pooled,error-magnitude,1.0,pooled x error-magnitude
+normalized_RMSE,pooled,error-magnitude,1.0,pooled x error-magnitude
+mean_pearson_r,within-env,discrimination,0.7,within-env x discrimination
+mean_spearman_r,within-env,discrimination,0.7,within-env x discrimination
+mean_lineRegressSlope,within-env,discrimination,0.6666666666666666,within-env x discrimination
+mean_r2_score,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_r2_pearson,within-env,discrimination,0.8,within-env x discrimination
+mean_MAE,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_realative_MAE,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_normalized_MAE,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_RMSE,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_relative_RMSE,within-env,error-magnitude,1.0,within-env x error-magnitude
+mean_normalized_RMSE,within-env,error-magnitude,1.0,within-env x error-magnitude

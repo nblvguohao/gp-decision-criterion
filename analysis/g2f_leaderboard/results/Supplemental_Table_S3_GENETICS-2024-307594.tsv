@@ -1,0 +1,32 @@
+##### SHEET: Sheet1 (xl/worksheets/sheet1.xml)
+					Only Known for Teams Participating in the Mansucript				
+Team Name	Rank	Included In Manuscript	Classical Machine Learning	Linear/Mixed/BLUP	Deep Learning/Neural Net	Other Strategy	Ensemble Model	Mecanistic Model	Random Forest	Gradient Boosting	Deep Learner	Ensmble	Linear
+CLAC	1	1	1	1			1		1			1	1
+igorkf	2		1										
+phenomaize	3	1		1									1
+UCD_MegaLMM	4	1		1								1	1
+CGM	5			1									
+Purdue	6		1	1			1						
+SmAL	7	1			1	1		1			1		
+ML_APT	8	1	1	1			1		1			1	1
+MPB_Group	9	1		1	1					1	1	1	1
+AIBreeding	10		1	1	1		1						
+AgroStat	11		1				1						
+arulrich	12	1	1						1			1	
+DataJanitors	13	1	1	1			1			1		1	1
+CropsAreCool	14		1				1						
+AllModelsAreWrong	15	1	1	1			1		1	1		1	1
+agAdaptAR	16	1	1		1		1			1	1	1	
+DeepCropVision	18	1			1		1				1	1	
+supermanwasd	19						1						
+BioSense	20		1			1							
+Kernel of Truth	21	1	1	1			1		1			1	1
+AIMaize	24	1	1	1	1		1			1	1	1	1
+EnBiSys	25	1			1						1		
+Genetwister	26			1									
+gartybois	27	1	1	1					1			1	
+Niche Squad	28	1			1						1		
+uwaBioinfo	29	1	1				1		1			1	
+TinyAfrica	30		1		1								
+													
+Percentage of Teams Using Model Type			0.62962962962962965	0.51851851851851849	0.33333333333333331	7.407407407407407E-2	0.51851851851851849	5.8823529411764705E-2	0.41176470588235292	0.29411764705882354	0.41176470588235292	0.76470588235294112	0.52941176470588236

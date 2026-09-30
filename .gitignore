@@ -1,0 +1,17 @@
+# data/raw/ holds only the redistributable primary files the scripts read; they are
+# added explicitly (git add -f). CUBIC data are never added (DATA_SOURCES.md).
+data/raw/
+# The soybean panels ship gzipped; the uncompressed copies are regenerated.
+analysis/crosscrop/results/nust_panel_wide.csv
+analysis/crosscrop/results/nust_panel_predictions.csv
+
+.DS_Store
+__pycache__/
+*.pyc
+
+# CUBIC per-trait panels: CC BY-NC-ND derivatives, local only
+analysis/crosscrop/results/china_panel_wide*.csv
+# Atlas per-combination method panels and marker/phenotype caches: row-level predictions and derived
+# inputs (CUBIC phenotypes are CC BY-NC-ND). Rebuilt locally by analysis/atlas/atlas.py and prep_processed.py.
+analysis/atlas/panels/
+analysis/atlas/cache/

@@ -1,0 +1,25 @@
+dataset,decision,rule,family,recovery,split_lo,split_hi,n_env
+maize (5 verified),D3_pooled_topk,mean_RMSE,error,-0.22590018803573758,-1.666467174293691,1.0,23
+maize (5 verified),D3_pooled_topk,mean_MAE,error,-0.23816892730747774,-1.686799737616427,1.0,23
+maize (5 verified),D3_pooled_topk,mean_r2_score,error,-0.018684879184183097,-1.62331718342095,1.0,23
+maize (5 verified),D3_pooled_topk,mean_pearson_r,correlation,0.16174565237535046,-1.8320426273168016,1.0,23
+maize (5 verified),D3_pooled_topk,mean_spearman_r,correlation,-0.3866529833520172,-1.4704382925910342,1.0,23
+maize (5 verified),D3_pooled_topk,mean_NDCG@10%,correlation,-0.5711548800987665,-1.6221533562836332,0.5551496141643534,23
+common bean,D3_pooled_topk,mean_RMSE,error,0.9113630834346158,0.6054227741005337,1.0,10
+common bean,D3_pooled_topk,mean_MAE,error,0.9445051001644645,0.6280601185504288,1.0,10
+common bean,D3_pooled_topk,mean_r2_score,error,0.8571668870820814,0.45039673259212254,1.0,10
+common bean,D3_pooled_topk,mean_pearson_r,correlation,0.9594067536353899,0.6282407647743479,1.0,10
+common bean,D3_pooled_topk,mean_spearman_r,correlation,0.9399737620774802,0.6280601185504288,1.0,10
+common bean,D3_pooled_topk,mean_NDCG@10%,correlation,0.8345182603508086,0.6210149158175832,1.0,10
+spring wheat,D3_pooled_topk,mean_RMSE,error,0.9437274689614713,0.5768466604537794,1.0,109
+spring wheat,D3_pooled_topk,mean_MAE,error,0.9836350532350755,0.9062006013147507,1.0,109
+spring wheat,D3_pooled_topk,mean_r2_score,error,0.922127538225836,0.6625435201248636,1.0,109
+spring wheat,D3_pooled_topk,mean_pearson_r,correlation,0.7186592219272945,0.5209273595189109,0.9628511464849172,109
+spring wheat,D3_pooled_topk,mean_spearman_r,correlation,0.7811682714977881,0.566981737336952,1.0,109
+spring wheat,D3_pooled_topk,mean_NDCG@10%,correlation,0.2997677693319563,-2.788536306949278,1.0,109
+soybean,D3_pooled_topk,mean_RMSE,error,0.4436420445583858,-0.14797873200897177,1.0,169
+soybean,D3_pooled_topk,mean_MAE,error,0.30741965665734644,-0.1847634402839247,1.0,169
+soybean,D3_pooled_topk,mean_r2_score,error,0.09197307112704889,-0.495499093512158,0.6009527271234474,169
+soybean,D3_pooled_topk,mean_pearson_r,correlation,0.9076776672100629,0.5815825045677923,1.0,169
+soybean,D3_pooled_topk,mean_spearman_r,correlation,0.9083640799665534,0.5815825045677923,1.0,169
+soybean,D3_pooled_topk,mean_NDCG@10%,correlation,0.907068303016616,0.5815825045677923,1.0,169

@@ -1,0 +1,713 @@
+{
+ "source": {
+  "file": "examples/spring_wheat_URSN.csv (GPverdict repository)",
+  "sha256": "c1804dc3671f33bae73a97ecd534f9e7e4521c5c3859ab1dc06e20e1d80d1e80",
+  "rows": 33116,
+  "gpverdict_version": "1.1.1",
+  "settings": {
+   "frac": 0.1,
+   "min_n": 10,
+   "B": 200,
+   "seed": 0,
+   "note": "web page settings; min_n = 12 (the example button) gives identical results"
+  }
+ },
+ "example_rows": {
+  "columns": [
+   "environment",
+   "genotype",
+   "observed",
+   "predicted",
+   "method"
+  ],
+  "rows": [
+   [
+    "BRK_00",
+    "PI182561",
+    "66.0",
+    "70.39553622520553",
+    "ridge_pc5_lo"
+   ],
+   [
+    "BRK_00",
+    "PI382161",
+    "92.5",
+    "69.85394624267543",
+    "ridge_pc5_lo"
+   ],
+   [
+    "BRK_00",
+    "PI382167",
+    "72.0",
+    "71.11756694567885",
+    "ridge_pc5_lo"
+   ]
+  ]
+ },
+ "headline": [
+  "**Rank methods by a within-environment correlation** for selecting the top 10% in each environment: `ridge_pc40_lo` ranks first by the rank correlation and `mlp` by Pearson r. Both correlations can rank methods for this decision (the rank correlation is admissible, Pearson r is protected against calibration), and in the published outcome tests neither consistently selected better material.",
+  "**Choose among `ridge_pc40_lo`, `ridge_pc40_hi`, `mlp`, `ens`, `gbm`** on cost or simplicity: at this trial size (1,948 genotype\u2013environment cells per method) they lie within 0.067 of the best on at least one correlation, the smallest gap such a trial resolves (Gaussian lower bound; calibrated panels needed 0.101\u20130.282).",
+  "The first two methods are practically identical on the rank correlation (gap below 0.0001).",
+  "Ranking by RMSE would pick `ens` instead; RMSE and Pearson r order 25 % of method pairs in opposite directions.",
+  "Out of sample (environment split, 200 splits, outcome reliability 0.68), the method each rule picks recovers 59 % (rank correlation), 77 % (Pearson r) and 37 % (RMSE) of the selection gain attainable over an average method."
+ ],
+ "planning_table": [
+  {
+   "gap": 0.1,
+   "cells": 879.5376489999995
+  },
+  {
+   "gap": 0.05,
+   "cells": 3518.150595999998
+  },
+  {
+   "gap": 0.03,
+   "cells": 9772.640544444443
+  },
+  {
+   "gap": 0.02,
+   "cells": 21988.44122499999
+  },
+  {
+   "gap": 0.01,
+   "cells": 87953.76489999997
+  }
+ ],
+ "tool_output": {
+  "settings": {
+   "frac": 0.1,
+   "min_genotypes": 10,
+   "bootstrap": 200,
+   "seed": 0
+  },
+  "data": {
+   "methods": 17,
+   "environments": 109,
+   "genotypes": 384,
+   "cells": 1948
+  },
+  "summary": [
+   {
+    "method": "ens",
+    "rmse": 12.486562359296302,
+    "mae": 9.56190023517267,
+    "r2_score": -0.18564044008770736,
+    "pearson": 0.2742021527253786,
+    "spearman": 0.2580123912338448,
+    "slope": 0.7308048939351272,
+    "sel_diff": 0.22649102925148484,
+    "hit_rate": 0.13302752293577982,
+    "ndcg": 0.7111443601587824,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7458270364179193,
+    "pooled_rmse": 13.36366763526227
+   },
+   {
+    "method": "gblup",
+    "rmse": 13.704557050397666,
+    "mae": 10.646969706538934,
+    "r2_score": -1.4606727190191728,
+    "pearson": 0.16052870524867544,
+    "spearman": 0.11343122656839433,
+    "slope": 0.2806726789951403,
+    "sel_diff": 0.20821961084754653,
+    "hit_rate": 0.09785932721712538,
+    "ndcg": 0.7078465458813133,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7012236260424248,
+    "pooled_rmse": 14.36803946556575
+   },
+   {
+    "method": "gblup_gxe",
+    "rmse": 13.53095611986913,
+    "mae": 10.419693692981399,
+    "r2_score": -0.9865009420016303,
+    "pearson": 0.16632345706254553,
+    "spearman": 0.1374985455491968,
+    "slope": 0.25733526119834643,
+    "sel_diff": 0.31000971820007156,
+    "hit_rate": 0.12385321100917432,
+    "ndcg": 0.7301332840152,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7068659766483307,
+    "pooled_rmse": 14.256776067187662
+   },
+   {
+    "method": "gbm",
+    "rmse": 12.727064098434848,
+    "mae": 9.688022848320038,
+    "r2_score": -0.11430216646256341,
+    "pearson": 0.26965449487274035,
+    "spearman": 0.25663599067278786,
+    "slope": 0.6849988080149613,
+    "sel_diff": 0.35673280373472427,
+    "hit_rate": 0.18042813455657494,
+    "ndcg": 0.7431924983500281,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7396382330626001,
+    "pooled_rmse": 13.560124571832956
+   },
+   {
+    "method": "knn10",
+    "rmse": 15.240684518023903,
+    "mae": 11.583085303985682,
+    "r2_score": -3.497041273304033,
+    "pearson": 0.13612624987692945,
+    "spearman": 0.18394889980256648,
+    "slope": 0.2824566584922613,
+    "sel_diff": 0.15570493169007318,
+    "hit_rate": 0.12996941896024464,
+    "ndcg": 0.6784970742105542,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.6272304576659209,
+    "pooled_rmse": 15.900365907396234
+   },
+   {
+    "method": "knn30",
+    "rmse": 16.389476528261916,
+    "mae": 12.416549038433011,
+    "r2_score": -2.8770988305777285,
+    "pearson": -0.07592129255001749,
+    "spearman": -0.015522857300287922,
+    "slope": -0.3068845839191157,
+    "sel_diff": -0.8451368654986051,
+    "hit_rate": 0.07492354740061162,
+    "ndcg": 0.419877084231243,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.5523290840430873,
+    "pooled_rmse": 17.088905849425036
+   },
+   {
+    "method": "markeronly_pc80",
+    "rmse": 20.72571090900209,
+    "mae": 17.197889426220847,
+    "r2_score": -25.843383754773036,
+    "pearson": 0.13289028207638465,
+    "spearman": 0.09613876869321038,
+    "slope": 0.18349868368988004,
+    "sel_diff": 0.273771184245945,
+    "hit_rate": 0.14678899082568808,
+    "ndcg": 0.7232770970153196,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.14648216459464478,
+    "pooled_rmse": 21.23778067041181
+   },
+   {
+    "method": "mlp",
+    "rmse": 12.724399062145746,
+    "mae": 10.07119533277515,
+    "r2_score": -2.247498398634376,
+    "pearson": 0.3983991100355478,
+    "spearman": 0.26714065923198793,
+    "slope": 0.7029211020089376,
+    "sel_diff": 0.3325678921143792,
+    "hit_rate": 0.14678899082568808,
+    "ndcg": 0.7405240136464194,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7412816702792151,
+    "pooled_rmse": 13.425160674015816
+   },
+   {
+    "method": "rf",
+    "rmse": 12.991292959652393,
+    "mae": 9.862950925176701,
+    "r2_score": -0.10706404280110547,
+    "pearson": 0.10545893038535625,
+    "spearman": 0.08083532138922213,
+    "slope": 0.2740065402657564,
+    "sel_diff": 0.038394561650064545,
+    "hit_rate": 0.07645259938837921,
+    "ndcg": 0.6569191678940327,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7245351316863878,
+    "pooled_rmse": 13.847471467500037
+   },
+   {
+    "method": "ridge_pc20_hi",
+    "rmse": 13.490025420760315,
+    "mae": 10.311595993688226,
+    "r2_score": -1.244546229993303,
+    "pearson": 0.1522450582159337,
+    "spearman": 0.13692589868157912,
+    "slope": 0.21944809788124214,
+    "sel_diff": 0.23179922912208614,
+    "hit_rate": 0.10703363914373089,
+    "ndcg": 0.7059027084616643,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7077430816273774,
+    "pooled_rmse": 14.208771871979927
+   },
+   {
+    "method": "ridge_pc20_lo",
+    "rmse": 13.491504239640864,
+    "mae": 10.313150860653188,
+    "r2_score": -1.251271526497134,
+    "pearson": 0.15257417302056894,
+    "spearman": 0.1380410606489015,
+    "slope": 0.2197252148213707,
+    "sel_diff": 0.23179922912208614,
+    "hit_rate": 0.10703363914373089,
+    "ndcg": 0.7059027084616643,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7077427883938454,
+    "pooled_rmse": 14.209425816057006
+   },
+   {
+    "method": "ridge_pc40_hi",
+    "rmse": 13.10473161879056,
+    "mae": 10.222097483883262,
+    "r2_score": -1.7794582576043856,
+    "pearson": 0.282601026981176,
+    "spearman": 0.272282731884752,
+    "slope": 0.544084294938758,
+    "sel_diff": 0.2731593702839171,
+    "hit_rate": 0.11926605504587157,
+    "ndcg": 0.7247179340864496,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7261864403028081,
+    "pooled_rmse": 13.79816176632661
+   },
+   {
+    "method": "ridge_pc40_lo",
+    "rmse": 13.107892619497221,
+    "mae": 10.2261830788636,
+    "r2_score": -1.7912401580364292,
+    "pearson": 0.2830831311733949,
+    "spearman": 0.2723267571863895,
+    "slope": 0.5437256875209923,
+    "sel_diff": 0.2731593702839171,
+    "hit_rate": 0.11926605504587157,
+    "ndcg": 0.7247851124447514,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7261548297775607,
+    "pooled_rmse": 13.799801126075486
+   },
+   {
+    "method": "ridge_pc5_hi",
+    "rmse": 13.743024452403375,
+    "mae": 10.65229992428756,
+    "r2_score": -0.5839321707162869,
+    "pearson": -0.004547608009770674,
+    "spearman": -0.07139226315553661,
+    "slope": -0.13434559584386294,
+    "sel_diff": -0.06457412904108088,
+    "hit_rate": 0.06422018348623854,
+    "ndcg": 0.623689107432045,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.6932227545365299,
+    "pooled_rmse": 14.489567275775988
+   },
+   {
+    "method": "ridge_pc5_lo",
+    "rmse": 13.743876425639517,
+    "mae": 10.652864430852546,
+    "r2_score": -0.5848996705569961,
+    "pearson": -0.004418453634937922,
+    "spearman": -0.07139226315553661,
+    "slope": -0.13403476636683964,
+    "sel_diff": -0.06457412904108088,
+    "hit_rate": 0.06422018348623854,
+    "ndcg": 0.623689107432045,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.6932282919046164,
+    "pooled_rmse": 14.490061649995807
+   },
+   {
+    "method": "ridge_pc80_hi",
+    "rmse": 13.641780705659947,
+    "mae": 10.705024285737652,
+    "r2_score": -1.7574052616668105,
+    "pearson": 0.21972350185464037,
+    "spearman": 0.16295945425884734,
+    "slope": 0.38538235928051956,
+    "sel_diff": 0.3027748842564676,
+    "hit_rate": 0.1452599388379205,
+    "ndcg": 0.7356568719556595,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7058857947535043,
+    "pooled_rmse": 14.274031431693436
+   },
+   {
+    "method": "ridge_pc80_lo",
+    "rmse": 13.65301919931532,
+    "mae": 10.71640994261008,
+    "r2_score": -1.7754362515526756,
+    "pearson": 0.22030149494725978,
+    "spearman": 0.161224973311091,
+    "slope": 0.3845410201409009,
+    "sel_diff": 0.3027748842564676,
+    "hit_rate": 0.1452599388379205,
+    "ndcg": 0.7356568719556595,
+    "environments": 109,
+    "cells": 1948,
+    "pooled_pearson": 0.7056229141138424,
+    "pooled_rmse": 14.28240435130619
+   }
+  ],
+  "ranks": [
+   {
+    "method": "ens",
+    "spearman": 4,
+    "pearson": 4,
+    "rmse": 1,
+    "sel_diff": 11
+   },
+   {
+    "method": "gblup",
+    "spearman": 12,
+    "pearson": 9,
+    "rmse": 12,
+    "sel_diff": 12
+   },
+   {
+    "method": "gblup_gxe",
+    "spearman": 10,
+    "pearson": 8,
+    "rmse": 9,
+    "sel_diff": 3
+   },
+   {
+    "method": "gbm",
+    "spearman": 5,
+    "pearson": 5,
+    "rmse": 3,
+    "sel_diff": 1
+   },
+   {
+    "method": "knn10",
+    "spearman": 6,
+    "pearson": 12,
+    "rmse": 15,
+    "sel_diff": 13
+   },
+   {
+    "method": "knn30",
+    "spearman": 15,
+    "pearson": 17,
+    "rmse": 16,
+    "sel_diff": 17
+   },
+   {
+    "method": "markeronly_pc80",
+    "spearman": 13,
+    "pearson": 13,
+    "rmse": 17,
+    "sel_diff": 6
+   },
+   {
+    "method": "mlp",
+    "spearman": 3,
+    "pearson": 1,
+    "rmse": 2,
+    "sel_diff": 2
+   },
+   {
+    "method": "rf",
+    "spearman": 14,
+    "pearson": 14,
+    "rmse": 4,
+    "sel_diff": 14
+   },
+   {
+    "method": "ridge_pc20_hi",
+    "spearman": 11,
+    "pearson": 11,
+    "rmse": 7,
+    "sel_diff": 9
+   },
+   {
+    "method": "ridge_pc20_lo",
+    "spearman": 9,
+    "pearson": 10,
+    "rmse": 8,
+    "sel_diff": 10
+   },
+   {
+    "method": "ridge_pc40_hi",
+    "spearman": 2,
+    "pearson": 3,
+    "rmse": 5,
+    "sel_diff": 7
+   },
+   {
+    "method": "ridge_pc40_lo",
+    "spearman": 1,
+    "pearson": 2,
+    "rmse": 6,
+    "sel_diff": 8
+   },
+   {
+    "method": "ridge_pc5_hi",
+    "spearman": 16,
+    "pearson": 16,
+    "rmse": 13,
+    "sel_diff": 15
+   },
+   {
+    "method": "ridge_pc5_lo",
+    "spearman": 17,
+    "pearson": 15,
+    "rmse": 14,
+    "sel_diff": 16
+   },
+   {
+    "method": "ridge_pc80_hi",
+    "spearman": 7,
+    "pearson": 7,
+    "rmse": 10,
+    "sel_diff": 4
+   },
+   {
+    "method": "ridge_pc80_lo",
+    "spearman": 8,
+    "pearson": 6,
+    "rmse": 11,
+    "sel_diff": 5
+   }
+  ],
+  "rank_intervals": [
+   {
+    "method": "ens",
+    "rank_lo": 1,
+    "rank_hi": 5
+   },
+   {
+    "method": "gblup",
+    "rank_lo": 10,
+    "rank_hi": 13
+   },
+   {
+    "method": "gblup_gxe",
+    "rank_lo": 8,
+    "rank_hi": 12
+   },
+   {
+    "method": "gbm",
+    "rank_lo": 1,
+    "rank_hi": 5
+   },
+   {
+    "method": "knn10",
+    "rank_lo": 6,
+    "rank_hi": 9
+   },
+   {
+    "method": "knn30",
+    "rank_lo": 15,
+    "rank_hi": 17
+   },
+   {
+    "method": "markeronly_pc80",
+    "rank_lo": 10,
+    "rank_hi": 14
+   },
+   {
+    "method": "mlp",
+    "rank_lo": 1,
+    "rank_hi": 5
+   },
+   {
+    "method": "rf",
+    "rank_lo": 11,
+    "rank_hi": 14
+   },
+   {
+    "method": "ridge_pc20_hi",
+    "rank_lo": 8,
+    "rank_hi": 13
+   },
+   {
+    "method": "ridge_pc20_lo",
+    "rank_lo": 7,
+    "rank_hi": 12
+   },
+   {
+    "method": "ridge_pc40_hi",
+    "rank_lo": 1,
+    "rank_hi": 5
+   },
+   {
+    "method": "ridge_pc40_lo",
+    "rank_lo": 1,
+    "rank_hi": 4
+   },
+   {
+    "method": "ridge_pc5_hi",
+    "rank_lo": 15,
+    "rank_hi": 16
+   },
+   {
+    "method": "ridge_pc5_lo",
+    "rank_lo": 16,
+    "rank_hi": 17
+   },
+   {
+    "method": "ridge_pc80_hi",
+    "rank_lo": 6,
+    "rank_hi": 9
+   },
+   {
+    "method": "ridge_pc80_lo",
+    "rank_lo": 7,
+    "rank_hi": 10
+   }
+  ],
+  "leader": "ridge_pc40_lo",
+  "rmse_pick": "ens",
+  "pearson_pick": "mlp",
+  "reversal_rmse_pearson": 0.25,
+  "method_pairs": 136,
+  "resolution": {
+   "gap": 0.06719434748307006,
+   "panel_range": [
+    0.10079152122460508,
+    0.2822162594288943
+   ],
+   "leader_margin": 4.402530163749585e-05,
+   "tied_with_leader": [
+    "ridge_pc40_lo",
+    "ridge_pc40_hi",
+    "mlp",
+    "ens",
+    "gbm"
+   ],
+   "cells_to_resolve_margin": 4537846007.614067
+  },
+  "intensity": 1.7549833193248678,
+  "projection_gap": 0.14660984770504526,
+  "invariance": [
+   {
+    "index": 0,
+    "metric": "mean within-environment rank correlation",
+    "key": "spearman",
+    "affine_drift": 0.0,
+    "monotone_drift": 0.0,
+    "reversal_change": 2.0,
+    "tier": "I"
+   },
+   {
+    "index": 1,
+    "metric": "realised selection differential at f",
+    "key": "sel_diff",
+    "affine_drift": 0.0,
+    "monotone_drift": 0.0,
+    "reversal_change": 2.2102778304170148,
+    "tier": "I"
+   },
+   {
+    "index": 2,
+    "metric": "top-k hit rate (coincidence of selected sets)",
+    "key": "hit_rate",
+    "affine_drift": 0.0,
+    "monotone_drift": 0.0,
+    "reversal_change": 0.6551724137931034,
+    "tier": "I"
+   },
+   {
+    "index": 3,
+    "metric": "NDCG at k",
+    "key": "ndcg",
+    "affine_drift": 0.0,
+    "monotone_drift": 0.0,
+    "reversal_change": 0.24947153466124947,
+    "tier": "I"
+   },
+   {
+    "index": 4,
+    "metric": "mean within-environment Pearson r",
+    "key": "pearson",
+    "affine_drift": 1.7290101214379496e-16,
+    "monotone_drift": 0.036483254969437176,
+    "reversal_change": 2.0,
+    "tier": "II"
+   },
+   {
+    "index": 5,
+    "metric": "mean within-environment RMSE",
+    "key": "rmse",
+    "affine_drift": 1.897280407319331,
+    "monotone_drift": 4.314226424071894,
+    "reversal_change": 9.849367012176396,
+    "tier": "III"
+   },
+   {
+    "index": 6,
+    "metric": "mean within-environment MAE",
+    "key": "mae",
+    "affine_drift": 2.477317432834464,
+    "monotone_drift": 5.749557463586946,
+    "reversal_change": 12.988705642548805,
+    "tier": "III"
+   },
+   {
+    "index": 7,
+    "metric": "mean within-environment R\u00b2 score",
+    "key": "r2_score",
+    "affine_drift": 143.19869073393107,
+    "monotone_drift": 333.08157319747534,
+    "reversal_change": 1418.3857843496944,
+    "tier": "III"
+   },
+   {
+    "index": 8,
+    "metric": "mean calibration slope",
+    "key": "slope",
+    "affine_drift": 0.12617312561417585,
+    "monotone_drift": 6.611609657793424,
+    "reversal_change": 2.0,
+    "tier": "III"
+   },
+   {
+    "index": 9,
+    "metric": "Pearson r pooled across environments",
+    "key": "pooled_pearson",
+    "affine_drift": 0.47115850313939006,
+    "monotone_drift": 0.8185047379002244,
+    "reversal_change": 2.0,
+    "tier": "III"
+   },
+   {
+    "index": 10,
+    "metric": "RMSE pooled across environments",
+    "key": "pooled_rmse",
+    "affine_drift": 2.024112203331889,
+    "monotone_drift": 4.100646097673697,
+    "reversal_change": 9.409309373094436,
+    "tier": "III"
+   }
+  ],
+  "outcome": {
+   "design": "environment split",
+   "splits": 200,
+   "recovery": {
+    "spearman": 0.594653633321076,
+    "pearson": 0.7720540798870424,
+    "rmse": 0.36943565262412886
+   },
+   "realised": {
+    "spearman": 0.2896667043511457,
+    "pearson": 0.3315951217657645,
+    "rmse": 0.236436660759188
+   },
+   "best": 0.3854699110995191,
+   "average": 0.14912091521901727,
+   "reliability": 0.683165024630542
+  }
+ }
+}

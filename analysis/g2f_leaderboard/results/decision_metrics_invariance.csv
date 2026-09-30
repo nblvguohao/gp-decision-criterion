@@ -1,0 +1,19 @@
+dataset,metric,affine,monotone
+common bean,SG,0.0,0.0
+common bean,hit,0.0,0.0
+common bean,NDCG,0.0,0.0
+common bean,kendall,0.0,0.0
+common bean,pearson,0.0,0.07683189586829586
+common bean,RMSE,1.3953907446584242,3.6184881573402805
+maize (5 verified submissions),SG,0.0,0.0
+maize (5 verified submissions),hit,0.0,0.0
+maize (5 verified submissions),NDCG,0.0,0.0
+maize (5 verified submissions),kendall,0.0,0.0
+maize (5 verified submissions),pearson,1.951592246561401e-16,0.16787922360617355
+maize (5 verified submissions),RMSE,0.8115078745180357,2.1536005183857014
+soybean,SG,0.0,0.0
+soybean,hit,0.0,0.0
+soybean,NDCG,0.0,0.0
+soybean,kendall,0.0,0.0
+soybean,pearson,0.0,0.09240912667455704
+soybean,RMSE,1.257799924317827,3.657431061531862

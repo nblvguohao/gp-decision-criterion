@@ -1,0 +1,5 @@
+quantity,gpverdict,paper,abs_difference
+"reversal rate, mean_RMSE vs mean_pearson_r",0.25,0.25,0.0
+"outcome-test recovery, spearman",0.5872135686285578,0.5872135686285578,0.0
+"outcome-test recovery, pearson",0.7845166380252186,0.7845166380252186,0.0
+"outcome-test recovery, rmse",0.37898486763099737,0.37898486763099737,0.0
